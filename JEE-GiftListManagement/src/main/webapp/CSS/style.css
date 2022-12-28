@@ -1,0 +1,27 @@
+/* Main/Global CSS */
+body {
+	margin: 0px;
+	padding: 0px;
+}
+.errorMessage {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+.errorMessage p {
+	color: red;
+	font-weight: 500;
+	margin: 5px;
+	padding: 5px;
+}
+.loginForm {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-direction: column;
+}
+.loginForm input {
+	margin: 5px;
+	padding: 5px;
+}
