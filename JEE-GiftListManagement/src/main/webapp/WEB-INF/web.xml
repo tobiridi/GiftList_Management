@@ -16,11 +16,22 @@
   	<servlet-class>be.Jadoulle_Declercq.Servlets.IndexServlet</servlet-class>
   </servlet>
   
+  <servlet>
+  	<servlet-name>Inscription</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.InscriptionServlet</servlet-class>
+  </servlet>
+  
   <!-- servlets mapping -->
   <servlet-mapping>
   	<servlet-name>Index</servlet-name>
   	<url-pattern>/Index</url-pattern>
   	<url-pattern>/IndexServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>Inscription</servlet-name>
+  	<url-pattern>/Inscription</url-pattern>
+  	<url-pattern>/InscriptionServlet</url-pattern>
   </servlet-mapping>
   
   <!-- context parameters -->

@@ -2,7 +2,6 @@ package be.Jadoulle_Declercq.Servlets;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
@@ -10,6 +9,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import be.Jadoulle_Declercq.JavaBeans.Customer;
 /**
  * Servlet implementation class IndexServlet
  */
@@ -31,6 +33,11 @@ public class IndexServlet extends HttpServlet {
 		//TODO : check if already have a session
 		//if no session login form
 		//else redirect to main page
+		
+		//TODO : get success inscription
+		String success = (String) request.getAttribute("successMessage");
+		System.out.println("success : " + success);
+		
 		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/JSP/Index.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -40,35 +47,38 @@ public class IndexServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HashMap<String, String> errorsMessage = new HashMap<>();
-		if(this.isValidForm(request, errorsMessage)) {
-			//TODO : success redirect to main page
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		
+		if(this.isValidLogin(email, password, errorsMessage)) {
+			Customer customerConnected = Customer.login(email, password);
+			
+			if(customerConnected != null) {
+				HttpSession session = request.getSession(true);
+				session.setAttribute("customerConnected", customerConnected);
+				//TODO : redirect to main page
+			}
+			else {
+				errorsMessage.put("loginError", "Email et/ou mot de passe incorrect.");
+			}
 		}
-		else {
-			request.setAttribute("errorsMessage", errorsMessage);
-			request.setAttribute("previousEmail", request.getParameter("email"));
-			request.setAttribute("previousPassword", request.getParameter("password"));
-			doGet(request, response);
-		}
+		request.setAttribute("errorsMessage", errorsMessage);
+		request.setAttribute("previousEmail", email);
+		request.setAttribute("previousPassword", password);
+		doGet(request, response);
 	}
 	
-	private boolean isValidForm(HttpServletRequest request, HashMap<String, String> errorsMessage) {
-		String userEmail = request.getParameter("email");
-		String userPassword = request.getParameter("password");
-		
+	private boolean isValidLogin(String userEmail, String userPassword, HashMap<String, String> errorsMessage) {
 		if(userEmail != null && userPassword != null) {
 			Pattern pattern = Pattern.compile("^[A-Z0-9._]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-			if(userEmail.isBlank()) {
-				errorsMessage.put("emailEmptyError", "Email vide.");
-			}
-			if(!pattern.matcher(userEmail).find()) {
+			
+			if(!pattern.matcher(userEmail).find() || userEmail.isBlank()) {
 				errorsMessage.put("emailInvalidError", "Email non valide.");
 			}
-			if(userPassword.isBlank()) {
-				errorsMessage.put("passwordEmptyError", "Mot de passe vide ou ne contient que des espaces.");
+			if(userPassword.trim().length() < 8 || userPassword.isBlank()) {
+				errorsMessage.put("passwordLengthError", "Mot de passe non valide.");
 			}
-			if(userPassword.trim().length() < 8) {
-				errorsMessage.put("passwordLengthError", "Mot de passe inférieur à 8 caractères.");
-			}
+			
 			return errorsMessage.isEmpty();
 		}
 		

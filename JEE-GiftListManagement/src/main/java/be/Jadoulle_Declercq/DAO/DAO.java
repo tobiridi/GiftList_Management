@@ -22,7 +22,7 @@ public abstract class DAO<T> {
 	//the web resource is the API
 	protected WebResource webResource;
 	//send GET, POST, PUT, DELETE parameters to API
-	protected MultivaluedMap<String, String> paramsPost = new MultivaluedMapImpl();
+	protected MultivaluedMap<String, String> params = new MultivaluedMapImpl();
 	//translate JSON retrieve by API to JavaBeans
 	protected ObjectMapper mapper;
 	//get response from API

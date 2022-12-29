@@ -7,7 +7,7 @@
 <head>
 <link rel="stylesheet" href="./CSS/style.css">
 <meta charset="UTF-8">
-<title>Connexion</title>
+<title>Inscription</title>
 </head>
 <body>
 	<%
@@ -16,9 +16,9 @@
 		String previousPassword = (String)request.getAttribute("previousPassword");
 	%>
 
-	<h1>Connexion au site GiftListManagement</h1>
-	<form action="Index" method="post" class="loginForm">
-	<%
+	<h1>Formulaire d'inscription</h1>
+	<form action="Inscription" method="post" class="loginForm">
+		<%
 		if(previousEmail == null && previousPassword == null) {
 	%>
 	<p><label for="email">Email </label> : <input type="email" id="email" name="email" placeholder="Email" required="required"/></p>
@@ -32,8 +32,8 @@
 	<%
 		}
 	%>
-		<input type="submit" value="Connexion" />
-		<a href="Inscription"><input type="button" value="Inscription"/></a>
+		<input type="submit" value="Confirmer" />
+		<a href="Index"><input type="button" value="Annuler"/></a>
 	</form>
 	<div class="errorMessage">
 		<%
