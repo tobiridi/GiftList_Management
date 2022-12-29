@@ -34,10 +34,6 @@ public class IndexServlet extends HttpServlet {
 		//if no session login form
 		//else redirect to main page
 		
-		//TODO : get success inscription
-		String success = (String) request.getAttribute("successMessage");
-		System.out.println("success : " + success);
-		
 		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/JSP/Index.jsp");
 		dispatcher.forward(request, response);
 	}

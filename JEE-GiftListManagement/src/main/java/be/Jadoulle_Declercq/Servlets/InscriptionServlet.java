@@ -45,8 +45,8 @@ public class InscriptionServlet extends HttpServlet {
 		if(this.isValidInscription(email, password, errorsMessage)) {
 			Customer newCustomer = new Customer(0, email, password);
 			if(newCustomer.create()) {
-				//TODO : back to index and display success message
 				request.setAttribute("successMessage", "Compte créer avec succès !");
+				doGet(request, response);
 			}
 			else {
 				errorsMessage.put("inscriptionError", "Une erreur est survenue lors de l'inscription.");

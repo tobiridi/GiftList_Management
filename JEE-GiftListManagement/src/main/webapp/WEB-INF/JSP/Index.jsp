@@ -16,22 +16,19 @@
 		String previousPassword = (String)request.getAttribute("previousPassword");
 	%>
 
-	<h1>Connexion au site GiftListManagement</h1>
+	<h1>Connexion au site Gift List Management</h1>
 	<form action="Index" method="post" class="loginForm">
-	<%
-		if(previousEmail == null && previousPassword == null) {
-	%>
-	<p><label for="email">Email </label> : <input type="email" id="email" name="email" placeholder="Email" required="required"/></p>
-	<p><label for="password">Mot de passe </label> : <input type="password" id="password" name="password" placeholder="Mot de passe" required="required"/></p>
-	<%
-		}
-		else {
-	%>
-	<p><label for="email">Email </label> : <input type="email" id="email" name="email" placeholder="Email" required="required" value="<%= previousEmail %>"/></p>
-	<p><label for="password">Mot de passe </label> : <input type="password" id="password" name="password" placeholder="Mot de passe" required="required" value="<%= previousPassword %>"/></p>
-	<%
-		}
-	%>
+		<% if(previousEmail == null && previousPassword == null) { %>
+	
+		<p><label for="email">Email </label> : <input type="email" id="email" name="email" placeholder="Email" required="required"/></p>
+		<p><label for="password">Mot de passe </label> : <input type="password" id="password" name="password" placeholder="Mot de passe" required="required"/></p>
+		
+		<% } else { %>
+		
+		<p><label for="email">Email </label> : <input type="email" id="email" name="email" placeholder="Email" required="required" value="<%= previousEmail %>"/></p>
+		<p><label for="password">Mot de passe </label> : <input type="password" id="password" name="password" placeholder="Mot de passe" required="required" value="<%= previousPassword %>"/></p>
+		
+		<% } %>
 		<input type="submit" value="Connexion" />
 		<a href="Inscription"><input type="button" value="Inscription"/></a>
 	</form>

@@ -2,6 +2,10 @@
 body {
 	margin: 0px;
 	padding: 0px;
+	background-color: #eaf0f0;
+}
+h1 {
+	text-align: center;
 }
 .errorMessage {
 	display: flex;
@@ -22,6 +26,18 @@ body {
 	flex-direction: column;
 }
 .loginForm input {
+	margin: 5px;
+	padding: 5px;
+}
+.successMessage {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+.successMessage p {
+	color: #1fbd55;
+	font-weight: 500;
 	margin: 5px;
 	padding: 5px;
 }

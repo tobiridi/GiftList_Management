@@ -1,6 +1,10 @@
 package be.Jadoulle_Declercq.DAO;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 
 import be.Jadoulle_Declercq.JavaBeans.Customer;
@@ -42,8 +46,41 @@ public class CustomerDAO extends DAO<Customer> {
 	}
 	
 	public Customer authenticate(String email, String password) {
-		// TODO not implemented, call DB
-		return null;
+		// TODO not finished, wrong procedure
+		Customer customerLog = null;
+		try {
+			//call procedure
+			CallableStatement cstmt = this.connection.prepareCall("{call authenticate_customer(?,?)}");
+			
+			//IN parameters
+			cstmt.setString(1, email);
+			cstmt.setString(2, password);
+			
+			//OUT parameters
+//			cstmt.registerOutParameter(1, Types.INTEGER);
+//			cstmt.registerOutParameter(2, Types.VARCHAR);
+//			cstmt.registerOutParameter(3, Types.VARCHAR);
+			
+			//execute
+			ResultSet res = cstmt.executeQuery();
+			
+			//get OUT parameters result
+			int id = res.getInt(1);
+			String emailCustomer = res.getString(2);
+			String passwordCustomer = res.getString(3);
+			
+			customerLog = new Customer();
+			customerLog.setId(id);
+			customerLog.setEmail(emailCustomer);
+			customerLog.setPassword(passwordCustomer);
+			
+			cstmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return customerLog;
 	}
 
 }
