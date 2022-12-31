@@ -51,18 +51,18 @@ public class IndexServlet extends HttpServlet {
 			if(customerConnected != null) {
 				HttpSession session = request.getSession(true);
 				session.setAttribute("customerConnected", customerConnected);
-				//TODO : redirect to main page
-				System.out.println(customerConnected.getId() + " " + customerConnected.getEmail() + " " + customerConnected.getFirstname() + " " + customerConnected.getLastname());
-				System.out.println("redirect to main page ...");
+				response.sendRedirect("MainPage");
 			}
 			else {
 				errorsMessage.put("loginError", "Email et/ou mot de passe incorrect.");
 			}
 		}
-		request.setAttribute("errorsMessage", errorsMessage);
-		request.setAttribute("previousEmail", email);
-		request.setAttribute("previousPassword", password);
-		doGet(request, response);
+		else {
+			request.setAttribute("errorsMessage", errorsMessage);
+			request.setAttribute("previousEmail", email);
+			request.setAttribute("previousPassword", password);
+			doGet(request, response);
+		}
 	}
 	
 	private boolean isValidLogin(String userEmail, String userPassword, HashMap<String, String> errorsMessage) {

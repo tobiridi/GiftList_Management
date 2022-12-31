@@ -1,7 +1,8 @@
 /* Main/Global CSS */
 body {
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 	background-color: #eaf0f0;
 }
 h1 {
@@ -40,4 +41,73 @@ h1 {
 	font-weight: 500;
 	margin: 5px;
 	padding: 5px;
+}
+
+/* navigation bar */
+.navigation-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 20vh;
+}
+.navigation {
+	position: relative;
+	width: 700px;
+	height: 70px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 10px;
+	background-color: #dfdfdf;
+}
+.navigation ul {
+	display: flex;
+	width: 700px;
+}
+.navigation ul li {
+	list-style: none;
+	/* navigation.width / nbr li */
+	width: 175px;
+	height: 70px;
+	z-index: 2;
+}
+.navigation ul li a {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 100%;
+	text-align: center;
+	font-weight: 500;
+	text-decoration: none;
+}
+.navigation ul li a .navigation-icon {
+	position: relative;
+	display: block;
+	line-height: 70px;
+	font-size: 1.5em;
+	transition: 0.5s;
+	color: #223227;
+}
+.navigation ul li.active a .navigation-icon {
+	color: #2196f3;
+	transform: translateY(-10px);
+}
+.navigation ul li a .navigation-text {
+	position: absolute;
+	background-color: #2196f3;
+	color: #ffffff;
+	padding: 2px 7px;
+	border-radius: 12px;
+	font-weight: 400;
+	font-size: 1em;
+	letter-spacing: 0.1em;
+	transition: 0.5s;
+	opacity: 0;
+	transform: translateY(25px);
+}
+.navigation ul li.active a .navigation-text {
+	opacity: 1;
+	transform: translateY(15px);
 }

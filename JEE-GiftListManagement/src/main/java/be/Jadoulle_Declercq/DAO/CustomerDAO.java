@@ -79,8 +79,8 @@ public class CustomerDAO extends DAO<Customer> {
 				JSONObject json = new JSONObject(apiResponse);
 				customerLog = this.mapper.readValue(json.toString(), Customer.class);
 				
-			} catch (Exception e2) {
-				e2.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 		
