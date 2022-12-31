@@ -2,11 +2,40 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" version="4.0">
   <display-name>JEE-GiftListManagement</display-name>
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>Index.html</welcome-file>
+    <welcome-file>Index.jsp</welcome-file>
   </welcome-file-list>
+  
+  <!-- filters declaration -->
+  
+  <!-- filters mapping -->
+  
+  <!-- servlets declaration -->
+  <servlet>
+  	<servlet-name>Index</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.IndexServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>Inscription</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.InscriptionServlet</servlet-class>
+  </servlet>
+  
+  <!-- servlets mapping -->
+  <servlet-mapping>
+  	<servlet-name>Index</servlet-name>
+  	<url-pattern>/Index</url-pattern>
+  	<url-pattern>/IndexServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>Inscription</servlet-name>
+  	<url-pattern>/Inscription</url-pattern>
+  	<url-pattern>/InscriptionServlet</url-pattern>
+  </servlet-mapping>
+  
+  <!-- context parameters -->
+    
+  <!-- session configuration -->
+  
 </web-app>
