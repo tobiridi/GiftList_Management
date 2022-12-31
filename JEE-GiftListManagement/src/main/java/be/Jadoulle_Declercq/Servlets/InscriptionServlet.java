@@ -23,7 +23,6 @@ public class InscriptionServlet extends HttpServlet {
      */
     public InscriptionServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -39,11 +38,13 @@ public class InscriptionServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HashMap<String, String> errorsMessage = new HashMap<>();
+		String firstname = request.getParameter("firstname");
+		String lastname = request.getParameter("lastname");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		
-		if(this.isValidInscription(email, password, errorsMessage)) {
-			Customer newCustomer = new Customer(0, email, password);
+		if(this.isValidInscription(email, password, firstname, lastname, errorsMessage)) {
+			Customer newCustomer = new Customer(0, email, password, firstname, lastname);
 			if(newCustomer.create()) {
 				request.setAttribute("successMessage", "Compte créer avec succès !");
 				doGet(request, response);
@@ -53,6 +54,8 @@ public class InscriptionServlet extends HttpServlet {
 				request.setAttribute("errorsMessage", errorsMessage);
 				request.setAttribute("previousEmail", email);
 				request.setAttribute("previousPassword", password);
+				request.setAttribute("previousFirstname", firstname);
+				request.setAttribute("previousLastname", lastname);
 				doGet(request, response);
 			}
 		}
@@ -60,12 +63,14 @@ public class InscriptionServlet extends HttpServlet {
 			request.setAttribute("errorsMessage", errorsMessage);
 			request.setAttribute("previousEmail", email);
 			request.setAttribute("previousPassword", password);
+			request.setAttribute("previousFirstname", firstname);
+			request.setAttribute("previousLastname", lastname);
 			doGet(request, response);
 		}
 	}
 
-	private boolean isValidInscription(String userEmail, String userPassword, HashMap<String, String> errorsMessage) {
-		if(userEmail != null && userPassword != null) {
+	private boolean isValidInscription(String userEmail, String userPassword, String userFirstname, String userLastname, HashMap<String, String> errorsMessage) {
+		if(userEmail != null && userPassword != null && userFirstname != null && userLastname != null) {
 			Pattern pattern = Pattern.compile("^[A-Z0-9._]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 			
 			if(userEmail.isBlank()) {
@@ -79,6 +84,12 @@ public class InscriptionServlet extends HttpServlet {
 			}
 			if(userPassword.trim().length() < 8) {
 				errorsMessage.put("passwordLengthError", "Mot de passe inférieur à 8 caractères.");
+			}
+			if(userFirstname.isBlank()) {
+				errorsMessage.put("firstnameError", "Prénom non valide.");
+			}
+			if(userLastname.isBlank()) {
+				errorsMessage.put("lastnameError", "Nom non valide.");
 			}
 			
 			return errorsMessage.isEmpty();

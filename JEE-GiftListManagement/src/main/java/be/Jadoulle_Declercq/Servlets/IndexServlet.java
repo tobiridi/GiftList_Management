@@ -23,7 +23,6 @@ public class IndexServlet extends HttpServlet {
      */
     public IndexServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -53,6 +52,8 @@ public class IndexServlet extends HttpServlet {
 				HttpSession session = request.getSession(true);
 				session.setAttribute("customerConnected", customerConnected);
 				//TODO : redirect to main page
+				System.out.println(customerConnected.getId() + " " + customerConnected.getEmail() + " " + customerConnected.getFirstname() + " " + customerConnected.getLastname());
+				System.out.println("redirect to main page ...");
 			}
 			else {
 				errorsMessage.put("loginError", "Email et/ou mot de passe incorrect.");

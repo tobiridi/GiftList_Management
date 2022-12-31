@@ -22,7 +22,7 @@ public abstract class DAO<T> {
 	//the web resource is the API
 	protected WebResource webResource;
 	//send GET, POST, PUT, DELETE parameters to API
-	protected MultivaluedMap<String, String> params = new MultivaluedMapImpl();
+	protected MultivaluedMap<String, String> params;
 	//translate JSON retrieve by API to JavaBeans
 	protected ObjectMapper mapper;
 	//get response from API
@@ -33,6 +33,7 @@ public abstract class DAO<T> {
 		this.client = Client.create(this.config);
 		this.webResource = this.client.resource(UriBuilder.fromUri(BASE_URI).build());
 		this.mapper = new ObjectMapper();
+		this.params = new MultivaluedMapImpl();
 	}
 	
 	public abstract T find(int id);

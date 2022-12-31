@@ -1,9 +1,10 @@
 package be.Jadoulle_Declercq.DAO;
 
+import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Struct;
 import java.sql.Types;
 import java.util.ArrayList;
 
@@ -29,7 +30,33 @@ public class CustomerDAO extends DAO<Customer> {
 
 	@Override
 	public boolean create(Customer obj) {
-		// TODO Auto-generated method stub
+		try {
+			//call procedure
+			CallableStatement cstmt = this.connection.prepareCall("{call insert_Customer(?,?,?,?,?)}");
+			
+			//IN parameters
+			cstmt.setString(2, obj.getFirstname());
+			cstmt.setString(3, obj.getLastname());
+			cstmt.setString(4, obj.getEmail());
+			cstmt.setString(5, obj.getPassword());
+			
+			//OUT parameters
+			cstmt.registerOutParameter(1, Types.INTEGER);
+			
+			//execute
+			cstmt.executeUpdate();
+			int res = cstmt.getInt(1);
+			cstmt.close();
+			
+			if(res > 0) {
+				obj.setId(res);
+				return true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		return false;
 	}
 
@@ -46,37 +73,47 @@ public class CustomerDAO extends DAO<Customer> {
 	}
 	
 	public Customer authenticate(String email, String password) {
-		// TODO not finished, wrong procedure
 		Customer customerLog = null;
 		try {
 			//call procedure
-			CallableStatement cstmt = this.connection.prepareCall("{call authenticate_customer(?,?)}");
+			CallableStatement cstmt = this.connection.prepareCall("{call authenticate_Customer(?,?,?)}");
 			
 			//IN parameters
-			cstmt.setString(1, email);
-			cstmt.setString(2, password);
+			cstmt.setString(2, email);
+			cstmt.setString(3, password);
+			
+			//define a specify structure
+//			Struct customer_object = this.connection.createStruct("CUSTOMER_OBJECT",
+//					new Object[] {"id_Customer_object", "email_object", "password_object"});
 			
 			//OUT parameters
-//			cstmt.registerOutParameter(1, Types.INTEGER);
-//			cstmt.registerOutParameter(2, Types.VARCHAR);
-//			cstmt.registerOutParameter(3, Types.VARCHAR);
+			cstmt.registerOutParameter(1, Types.STRUCT, "CUSTOMER_OBJECT");
 			
 			//execute
-			ResultSet res = cstmt.executeQuery();
+			cstmt.executeQuery();
 			
 			//get OUT parameters result
-			int id = res.getInt(1);
-			String emailCustomer = res.getString(2);
-			String passwordCustomer = res.getString(3);
+			Struct customer_object = (Struct) cstmt.getObject(1);
 			
-			customerLog = new Customer();
-			customerLog.setId(id);
-			customerLog.setEmail(emailCustomer);
-			customerLog.setPassword(passwordCustomer);
+			if(customer_object != null) {
+				Object[] data = customer_object.getAttributes();
+				
+				BigDecimal id = (BigDecimal) data[0];
+				String firstname = (String) data[1];
+				String lastname = (String) data[2];
+				String emailCustomer = (String) data[3];
+				
+				customerLog = new Customer();
+				customerLog.setId(id.intValue());
+				customerLog.setFirstname(firstname);
+				customerLog.setLastname(lastname);
+				customerLog.setEmail(emailCustomer);
+				customerLog.setPassword(null);
+			}
 			
 			cstmt.close();
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

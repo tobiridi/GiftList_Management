@@ -1,7 +1,5 @@
 package be.Jadoulle_Declercq.API;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -20,21 +18,46 @@ public class CustomerAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response authenticateCustomer(@FormParam("email") String email, @FormParam("password") String password) {
 		if(email != null && password != null) {
-			//Customer customer = Customer.login(email, password);
-			
-			//TODO : personal test
-			Customer customer = new Customer();
-			customer.setId(5);
-			customer.setEmail(email);
-			customer.setPassword(password);
-			
-			if(customer != null) {
-				return Response.status(Status.OK)
-						.entity(customer)
-						.build();
+			if(!email.isBlank() && !password.isBlank()) {
+				Customer customer = Customer.login(email, password);
+				
+				if(customer != null) {
+					return Response.status(Status.OK).entity(customer).build();
+				}
+				else {
+					return Response.status(Status.NOT_FOUND).build();
+				}
 			}
 		}
 		
-		return Response.status(Status.NOT_FOUND).build();
+		return Response.status(Status.BAD_REQUEST).build();
+	}
+	
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response createCustomer(@FormParam("email") String email, @FormParam("password") String password, 
+			@FormParam("firstname") String firstname, @FormParam("lastname") String lastname) {
+		
+		if (email != null && password != null && firstname != null && lastname != null) {
+			if (!email.isBlank() && !password.isBlank() && !firstname.isBlank() && !lastname.isBlank()) {
+				
+				Customer newCustomer = new Customer();
+				newCustomer.setEmail(email);
+				newCustomer.setPassword(password);
+				newCustomer.setLastname(lastname);
+				newCustomer.setFirstname(firstname);
+
+				if (newCustomer.create()) {
+					return Response.status(Status.CREATED)
+							.header("Location", "/JEE-GiftListManagement-API/api/customer/" + newCustomer.getId()).build();
+				}
+				else {
+					return Response.status(Status.SERVICE_UNAVAILABLE).build();
+				}
+			}
+		}
+		
+		return Response.status(Status.BAD_REQUEST).build();
+		
 	}
 }

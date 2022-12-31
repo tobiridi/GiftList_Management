@@ -15,6 +15,8 @@
 		HashMap<String, String> errorsMessage = (HashMap<String, String>) request.getAttribute("errorsMessage");
 		String previousEmail = (String)request.getAttribute("previousEmail");
 		String previousPassword = (String)request.getAttribute("previousPassword");
+		String previousFirstname = (String)request.getAttribute("previousFirstname");
+		String previousLastname = (String)request.getAttribute("previousLastname");
 	%>
 
 	<h1>Formulaire d'inscription</h1>
@@ -25,15 +27,19 @@
 	</div>
 	
 	<form action="Inscription" method="post" class="loginForm">
-		<% if(previousEmail == null && previousPassword == null) { %>
+		<% if(previousEmail == null && previousPassword == null && previousFirstname == null && previousLastname == null) { %>
 		
 		<p><label for="email">Email </label> : <input type="email" id="email" name="email" placeholder="Email" required="required"/></p>
 		<p><label for="password">Mot de passe </label> : <input type="password" id="password" name="password" placeholder="Mot de passe" required="required"/></p>
+		<p><label for="lastname">Nom </label> : <input type="text" id="lastname" name="lastname" placeholder="Nom" required="required"/></p>
+		<p><label for="firstname">Prénom</label> : <input type="text" id="firstname" name="firstname" placeholder="Prénom" required="required"/></p>
 		
 		<% } else { %>
 		
 		<p><label for="email">Email </label> : <input type="email" id="email" name="email" placeholder="Email" required="required" value="<%= previousEmail %>"/></p>
 		<p><label for="password">Mot de passe </label> : <input type="password" id="password" name="password" placeholder="Mot de passe" required="required" value="<%= previousPassword %>"/></p>
+		<p><label for="lastname">Nom </label> : <input type="text" id="lastname" name="lastname" placeholder="Nom" required="required" value="<%= previousLastname %>"/></p>
+		<p><label for="firstname">Prénom</label> : <input type="text" id="firstname" name="firstname" placeholder="Prénom" required="required" value="<%= previousFirstname %>"/></p>
 		
 		<% } %>
 		<input type="submit" value="Confirmer" />

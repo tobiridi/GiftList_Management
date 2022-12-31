@@ -1,9 +1,11 @@
 package be.Jadoulle_Declercq.DAO;
 
+import java.net.URI;
 import java.util.ArrayList;
 
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
+
+import org.json.JSONObject;
 
 import com.sun.jersey.api.client.ClientResponse;
 
@@ -29,7 +31,23 @@ public class CustomerDAO extends DAO<Customer> {
 
 	@Override
 	public boolean create(Customer obj) {
-		// TODO Auto-generated method stub
+		this.params.add("email", obj.getEmail());
+		this.params.add("password", obj.getPassword());
+		this.params.add("firstname", obj.getFirstname());
+		this.params.add("lastname", obj.getLastname());
+		
+		this.response = this.webResource.path("customer").accept(MediaType.APPLICATION_JSON)
+				.post(ClientResponse.class, this.params);
+		
+		if(this.response.getStatus() == 201) {
+			//get header location
+			URI apiLocation = this.response.getLocation();
+			if(apiLocation != null) {
+				System.out.println("apiResponse : " + apiLocation.getPath());
+			}
+			return true;
+		}
+		
 		return false;
 	}
 
@@ -46,6 +64,7 @@ public class CustomerDAO extends DAO<Customer> {
 	}
 	
 	public Customer authenticate(String email, String password) {
+		Customer customerLog = null;
 		this.params.add("email", email);
 		this.params.add("password", password);
 		
@@ -54,13 +73,18 @@ public class CustomerDAO extends DAO<Customer> {
 		
 		if(this.response.getStatus() == 200) {
 			String apiResponse = this.response.getEntity(String.class);
-			System.out.println("apiResponse : " + apiResponse);
-			return null;
+			
+			try {
+				//create customer
+				JSONObject json = new JSONObject(apiResponse);
+				customerLog = this.mapper.readValue(json.toString(), Customer.class);
+				
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
 		}
-		else {
-			System.out.println("method post invalide : " + response.getStatus());
-			return null;
-		}
+		
+		return customerLog;
 	}
 
 }
