@@ -20,13 +20,13 @@
 	%>
 
 	<h1>Formulaire d'inscription</h1>
-	<div class="successMessage">
-		<% if(successMessage != null) { %>
-		<p><%= successMessage %></p>
-		<% } %>
-	</div>
+	<% if(successMessage != null) { %>
+		<div class="successMessage">
+			<p><%= successMessage %></p>
+		</div>
+	<% } %>
 	
-	<form action="Inscription" method="post" class="loginForm">
+	<form action="Inscription" method="post">
 		<% if(previousEmail == null && previousPassword == null && previousFirstname == null && previousLastname == null) { %>
 		
 		<p><label for="email">Email </label> : <input type="email" id="email" name="email" placeholder="Email" required="required"/></p>
@@ -42,15 +42,15 @@
 		<p><label for="firstname">Prénom</label> : <input type="text" id="firstname" name="firstname" placeholder="Prénom" required="required" value="<%= previousFirstname %>"/></p>
 		
 		<% } %>
-		<input type="submit" value="Confirmer" />
-		<a href="Index"><input type="button" value="Annuler"/></a>
+		<input type="submit" value="Confirmer" class="btnConfirm"/>
+		<a href="Index"><input type="button" value="Annuler" class="btnCancel"/></a>
 	</form>
 	<div class="errorMessage">
 		<%
-		if(errorsMessage != null) {
-			for(Map.Entry<String,String> error : errorsMessage.entrySet()) {
+		if (errorsMessage != null) {
+			for (Map.Entry<String, String> error : errorsMessage.entrySet()) {
 		%>
-		<p><%= error.getValue() %></p>
+			<p><%=error.getValue()%></p>
 		<%
 			}
 		}

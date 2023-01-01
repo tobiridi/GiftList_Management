@@ -12,5 +12,6 @@
 		<jsp:param value="1" name="pageIndex"/>
 	</jsp:include>
 	<h1>vous êtes sur la page principal</h1>
+	<%-- TODO : get all giftList for the user --%>
 </body>
 </html>

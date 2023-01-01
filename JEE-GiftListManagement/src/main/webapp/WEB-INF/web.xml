@@ -26,6 +26,10 @@
   	<servlet-class>be.Jadoulle_Declercq.Servlets.MainPageServlet</servlet-class>
   </servlet>
   
+  <servlet>
+  	<servlet-name>GiftList</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.GiftListServlet</servlet-class>
+  </servlet>
   
   <!-- servlets mapping -->
   <servlet-mapping>
@@ -44,6 +48,12 @@
   	<servlet-name>MainPage</servlet-name>
   	<url-pattern>/MainPage</url-pattern>
   	<url-pattern>/MainPageServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>GiftList</servlet-name>
+  	<url-pattern>/GiftList</url-pattern>
+  	<url-pattern>/GiftListServlet</url-pattern>
   </servlet-mapping>
   
   <!-- context parameters -->
