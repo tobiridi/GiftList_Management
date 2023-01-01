@@ -52,10 +52,6 @@ public class InscriptionServlet extends HttpServlet {
 			else {
 				errorsMessage.put("inscriptionError", "Une erreur est survenue lors de l'inscription.");
 				request.setAttribute("errorsMessage", errorsMessage);
-				request.setAttribute("previousEmail", email);
-				request.setAttribute("previousPassword", password);
-				request.setAttribute("previousFirstname", firstname);
-				request.setAttribute("previousLastname", lastname);
 				doGet(request, response);
 			}
 		}

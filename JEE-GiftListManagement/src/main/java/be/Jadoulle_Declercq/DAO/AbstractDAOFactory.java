@@ -14,4 +14,5 @@ public abstract class AbstractDAOFactory {
 	
 	//abstract methods
 	public abstract DAO<Customer> getCustomerDao();
+	public abstract DAO<GiftList> getGiftListDao();
 }

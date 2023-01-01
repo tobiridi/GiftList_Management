@@ -11,6 +11,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import be.Jadoulle_Declercq.JavaBeans.Customer;
+import be.Jadoulle_Declercq.JavaBeans.GiftList;
 
 /**
  * Servlet implementation class GiftListServlet
@@ -39,13 +43,14 @@ public class GiftListServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HashMap<String, String> errorsMessage = new HashMap<>();
 		boolean isValid = false;
+		LocalDate giftListDeadLine = null;
 		String giftListType = request.getParameter("giftListType");
 		String giftListDeadLineParam = request.getParameter("giftListDeadLine");
 		
 		if(giftListType != null && giftListDeadLineParam != null) {
 			try {
 				if(giftListDeadLineParam != "") {
-					LocalDate giftListDeadLine = LocalDate.parse(giftListDeadLineParam, DateTimeFormatter.ISO_LOCAL_DATE);					
+					giftListDeadLine = LocalDate.parse(giftListDeadLineParam, DateTimeFormatter.ISO_LOCAL_DATE);					
 					isValid = this.isValidGiftList(giftListType, giftListDeadLine, errorsMessage);
 				}
 				else {
@@ -54,8 +59,18 @@ public class GiftListServlet extends HttpServlet {
 				
 				if(isValid) {
 					//TODO : create giftList
-					request.setAttribute("successMessage", "Liste créer avec succès !");
-					doGet(request, response);
+					HttpSession session = request.getSession(false);
+					Customer customerLog = (Customer) session.getAttribute("customerLog");
+					GiftList newGiftList = new GiftList(0, giftListType, true, giftListDeadLine, customerLog);
+					if(newGiftList.create()) {
+						request.setAttribute("successMessage", "Liste créer avec succès !");
+						doGet(request, response);
+					}
+					else {
+						errorsMessage.put("GiftListError", "Une erreur est survenue lors de la création de la liste.");
+						request.setAttribute("errorsMessage", errorsMessage);
+						doGet(request, response);
+					}
 				}
 				else {
 					request.setAttribute("errorsMessage", errorsMessage);
@@ -68,6 +83,10 @@ public class GiftListServlet extends HttpServlet {
 				e.printStackTrace();
 				errorsMessage.put("dateError", "date non valide.");
 				request.setAttribute("errorsMessage", errorsMessage);
+				doGet(request, response);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
 				doGet(request, response);
 			}
 		}

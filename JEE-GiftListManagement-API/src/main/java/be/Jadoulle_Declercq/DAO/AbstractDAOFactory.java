@@ -1,6 +1,7 @@
 package be.Jadoulle_Declercq.DAO;
 
 import be.Jadoulle_Declercq.JavaBeans.Customer;
+import be.Jadoulle_Declercq.JavaBeans.GiftList;
 
 public abstract class AbstractDAOFactory {
 	public static final int DAO_FACTORY = 1;
@@ -14,4 +15,5 @@ public abstract class AbstractDAOFactory {
 	
 	//abstract methods
 	public abstract DAO<Customer> getCustomerDao();
+	public abstract DAO<GiftList> getGiftListDao();
 }
