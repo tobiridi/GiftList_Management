@@ -58,7 +58,6 @@ public class GiftListServlet extends HttpServlet {
 				}
 				
 				if(isValid) {
-					//TODO : create giftList
 					HttpSession session = request.getSession(false);
 					Customer customerLog = (Customer) session.getAttribute("customerLog");
 					GiftList newGiftList = new GiftList(0, giftListType, true, giftListDeadLine, customerLog);

@@ -5,10 +5,22 @@
     <welcome-file>Index.html</welcome-file>
     <welcome-file>Index.jsp</welcome-file>
   </welcome-file-list>
+  <!-- context parameters -->
   
   <!-- filters declaration -->
+  <filter>
+  	<filter-name>AuthenticationFilter</filter-name>
+  	<filter-class>be.Jadoulle_Declercq.Filters.AuthenticationFilter</filter-class>
+  </filter>
   
   <!-- filters mapping -->
+  <filter-mapping>
+  	<filter-name>AuthenticationFilter</filter-name>
+  	<servlet-name>MainPage</servlet-name>
+  	<servlet-name>GiftList</servlet-name>
+  </filter-mapping>
+  
+  <!-- session configuration -->
   
   <!-- servlets declaration -->
   <servlet>
@@ -55,9 +67,5 @@
   	<url-pattern>/GiftList</url-pattern>
   	<url-pattern>/GiftListServlet</url-pattern>
   </servlet-mapping>
-  
-  <!-- context parameters -->
-    
-  <!-- session configuration -->
   
 </web-app>

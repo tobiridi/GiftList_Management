@@ -29,12 +29,14 @@ public class IndexServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//TODO : check if already have a session
-		//if no session login form
-		//else redirect to main page
-		
-		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/JSP/Index.jsp");
-		dispatcher.forward(request, response);
+		HttpSession session = request.getSession(true);
+		if(session.getAttribute("customerLog") != null) {
+			response.sendRedirect("MainPage");
+		}
+		else {
+			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/JSP/Index.jsp");
+			dispatcher.forward(request, response);			
+		}
 	}
 
 	/**
@@ -50,7 +52,11 @@ public class IndexServlet extends HttpServlet {
 			
 			if(customerConnected != null) {
 				HttpSession session = request.getSession(true);
-				session.setAttribute("customerConnected", customerConnected);
+				if(!session.isNew()) {
+					session.invalidate();
+					session = request.getSession(true);
+				}
+				session.setAttribute("customerLog", customerConnected);
 				response.sendRedirect("MainPage");
 			}
 			else {

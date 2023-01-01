@@ -79,10 +79,6 @@ public class GiftList implements Serializable {
 	
 	public boolean create() {
 		AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
-		//TODO : test temp
-		Customer c = new Customer();
-		c.setId(1);
-		this.setOwnerList(c);
 		return adf.getGiftListDao().create(this);
 	}
 	
