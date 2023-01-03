@@ -1,7 +1,7 @@
 /* Main/Global CSS */
 body {
-	margin: 0;
-	padding: 0;
+	margin: 5;
+	padding: 5;
 	box-sizing: border-box;
 	background-color: #eaf0f0;
 }
@@ -69,6 +69,31 @@ form input {
 	font-size: 1.1em;
 }
 
+/* table */
+table {
+	font-size: 1.1em;
+	margin-left: auto;
+	margin-right: auto;
+}
+table, th, td {
+	border: 1px solid #000;
+}
+td {
+	text-align: center;
+	padding-top: 5px;
+	padding-left: 10px;
+	padding-bottom: 5px;
+	padding-right: 10px;
+}
+td a input[type="button"] {
+	border: none;
+	outline: none;
+	background-color: #54b4d3;
+	border-radius: 5px;
+	cursor: pointer;
+	padding: 10px;
+	color: #fff;
+}
 
 /* navigation bar */
 .navigation-container {

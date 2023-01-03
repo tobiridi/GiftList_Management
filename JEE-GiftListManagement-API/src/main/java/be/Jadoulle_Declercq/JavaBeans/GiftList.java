@@ -1,10 +1,14 @@
 package be.Jadoulle_Declercq.JavaBeans;
 
 import java.io.Serializable;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import be.Jadoulle_Declercq.DAO.AbstractDAOFactory;
+import be.Jadoulle_Declercq.Serializers.JsonLocalDateSerializer;
 
 public class GiftList implements Serializable {
 	private static final long serialVersionUID = -1504368255368514487L;
@@ -37,6 +41,7 @@ public class GiftList implements Serializable {
 		this.isActive = isActive;
 	}
 	
+	@JsonSerialize(using = JsonLocalDateSerializer.class)
 	public LocalDate getDeadLine() {
 		return deadLine;
 	}

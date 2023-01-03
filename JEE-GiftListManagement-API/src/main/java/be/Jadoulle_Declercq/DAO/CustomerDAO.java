@@ -1,14 +1,19 @@
 package be.Jadoulle_Declercq.DAO;
 
 import java.math.BigDecimal;
+import java.sql.Array;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Struct;
+import java.sql.Timestamp;
 import java.sql.Types;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import be.Jadoulle_Declercq.JavaBeans.Customer;
+import be.Jadoulle_Declercq.JavaBeans.GiftList;
 
 public class CustomerDAO extends DAO<Customer> {
 
@@ -76,11 +81,11 @@ public class CustomerDAO extends DAO<Customer> {
 		Customer customerLog = null;
 		try {
 			//call procedure
-			CallableStatement cstmt = this.connection.prepareCall("{call authenticate_Customer(?,?,?)}");
+			CallableStatement cstmt = this.connection.prepareCall("{call authenticate_Customer(?,?,?,?)}");
 			
 			//IN parameters
-			cstmt.setString(2, email);
-			cstmt.setString(3, password);
+			cstmt.setString(3, email);
+			cstmt.setString(4, password);
 			
 			//define a specify structure
 //			Struct customer_object = this.connection.createStruct("CUSTOMER_OBJECT",
@@ -88,27 +93,60 @@ public class CustomerDAO extends DAO<Customer> {
 			
 			//OUT parameters
 			cstmt.registerOutParameter(1, Types.STRUCT, "CUSTOMER_OBJECT");
+			cstmt.registerOutParameter(2, Types.ARRAY, "T_GIFTLIST_OBJECT");
 			
 			//execute
 			cstmt.executeQuery();
 			
 			//get OUT parameters result
-			Struct customer_object = (Struct) cstmt.getObject(1);
+			Struct customerObject = (Struct) cstmt.getObject(1);
+			Array tabGiftListObject = cstmt.getArray(2);
 			
-			if(customer_object != null) {
-				Object[] data = customer_object.getAttributes();
+			//get customer
+			if(customerObject != null) {
+				Object[] dataCustomer = customerObject.getAttributes();
 				
-				BigDecimal id = (BigDecimal) data[0];
-				String firstname = (String) data[1];
-				String lastname = (String) data[2];
-				String emailCustomer = (String) data[3];
+				int id = ((BigDecimal) dataCustomer[0]).intValue();
+				String firstname = (String) dataCustomer[1];
+				String lastname = (String) dataCustomer[2];
+				String emailCustomer = (String) dataCustomer[3];
 				
-				customerLog = new Customer();
-				customerLog.setId(id.intValue());
-				customerLog.setFirstname(firstname);
-				customerLog.setLastname(lastname);
-				customerLog.setEmail(emailCustomer);
-				customerLog.setPassword(null);
+				customerLog = new Customer(id, emailCustomer, null, firstname, lastname);
+				
+				//get customer giftLists
+				if(tabGiftListObject != null) {
+					Object[] dataTabGiftListObject = (Object[]) tabGiftListObject.getArray();
+					for(Object giftListObject : dataTabGiftListObject) {
+						Object[] giftListData = ((Struct) giftListObject).getAttributes();
+						
+						BigDecimal idGiftList = (BigDecimal) giftListData[0];
+						String type = (String) giftListData[1];
+						Timestamp deadLine = (Timestamp) giftListData[2];
+						boolean isActive = ((BigDecimal) giftListData[3]).intValue() == 1 ? true : false;
+						int idCustomerGiftList = ((BigDecimal) giftListData[4]).intValue();
+						
+						//add own list to customerLog
+						if(customerLog.getId() == idCustomerGiftList) {
+							Customer owner = new Customer();
+							owner.setId(customerLog.getId());
+							GiftList giftList = new GiftList(idGiftList.intValue(), type, isActive, null, owner);
+							if (deadLine != null) {
+								giftList.setDeadLine(deadLine.toLocalDateTime().toLocalDate());
+							}
+							customerLog.addGiftList(giftList);
+						}
+						//add friends list to customerLog
+						else {
+							Customer friends = new Customer();
+							friends.setId(idCustomerGiftList);
+							GiftList giftList = new GiftList(idGiftList.intValue(), type, isActive, null, friends);
+							if (deadLine != null) {
+								giftList.setDeadLine(deadLine.toLocalDateTime().toLocalDate());
+							}
+							customerLog.addOtherCustomerGiftList(giftList);
+						}
+					}
+				}
 			}
 			
 			cstmt.close();

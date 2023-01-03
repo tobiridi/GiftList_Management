@@ -7,6 +7,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.json.JSONObject;
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.sun.jersey.api.client.ClientResponse;
 
 import be.Jadoulle_Declercq.JavaBeans.Customer;
@@ -77,6 +78,8 @@ public class CustomerDAO extends DAO<Customer> {
 			try {
 				//create customer
 				JSONObject json = new JSONObject(apiResponse);
+				//add LocalDate parsing
+				this.mapper.registerModule(new JavaTimeModule());
 				customerLog = this.mapper.readValue(json.toString(), Customer.class);
 				
 			} catch (Exception e) {
