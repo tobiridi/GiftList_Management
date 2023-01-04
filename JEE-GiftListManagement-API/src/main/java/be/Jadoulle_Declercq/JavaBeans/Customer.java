@@ -91,6 +91,11 @@ public class Customer implements Serializable {
 		return ((CustomerDAO) customerDao).authenticate(email, password);
 	}
 	
+	public static Customer get(int id) {
+		AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+		return adf.getCustomerDao().find(id);
+	}
+	
 	public boolean create() {
 		AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 		return adf.getCustomerDao().create(this);

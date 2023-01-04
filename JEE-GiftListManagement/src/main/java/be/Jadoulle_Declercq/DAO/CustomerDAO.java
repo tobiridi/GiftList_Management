@@ -20,8 +20,28 @@ public class CustomerDAO extends DAO<Customer> {
 
 	@Override
 	public Customer find(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		String idString = String.valueOf(id);
+		Customer customer = null;
+		
+		this.response = this.webResource.path("customer").path(idString).accept(MediaType.APPLICATION_JSON)
+				.get(ClientResponse.class);
+		
+		if(this.response.getStatus() == 200) {
+			String apiResponse = this.response.getEntity(String.class);
+			
+			try {
+				//create customer
+				JSONObject json = new JSONObject(apiResponse);
+				//add LocalDate parsing
+				this.mapper.registerModule(new JavaTimeModule());
+				customer = this.mapper.readValue(json.toString(), Customer.class);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return customer;
 	}
 
 	@Override

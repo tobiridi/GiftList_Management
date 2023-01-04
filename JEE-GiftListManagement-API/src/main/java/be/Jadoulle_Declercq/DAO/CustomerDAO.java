@@ -4,12 +4,10 @@ import java.math.BigDecimal;
 import java.sql.Array;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Struct;
 import java.sql.Timestamp;
 import java.sql.Types;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import be.Jadoulle_Declercq.JavaBeans.Customer;
@@ -23,8 +21,80 @@ public class CustomerDAO extends DAO<Customer> {
 
 	@Override
 	public Customer find(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Customer customer = null;
+		try {
+			//call procedure
+			CallableStatement cstmt = this.connection.prepareCall("{call get_Customer(?,?,?)}");
+			
+			//IN parameters
+			cstmt.setInt(3, id);
+			
+			//OUT parameters
+			cstmt.registerOutParameter(1, Types.STRUCT, "CUSTOMER_OBJECT");
+			cstmt.registerOutParameter(2, Types.ARRAY, "T_GIFTLIST_OBJECT");
+			
+			//execute
+			cstmt.executeQuery();
+			
+			//get OUT parameters result
+			Struct customerObject = (Struct) cstmt.getObject(1);
+			Array tabGiftListObject = cstmt.getArray(2);
+			
+			//get customer
+			if(customerObject != null) {
+				Object[] dataCustomer = customerObject.getAttributes();
+				
+				String firstname = (String) dataCustomer[1];
+				String lastname = (String) dataCustomer[2];
+				String emailCustomer = (String) dataCustomer[3];
+				
+				customer = new Customer(id, emailCustomer, null, firstname, lastname);
+				
+				//get customer giftLists
+				if(tabGiftListObject != null) {
+					Object[] dataTabGiftListObject = (Object[]) tabGiftListObject.getArray();
+					for(Object giftListObject : dataTabGiftListObject) {
+						Object[] giftListData = ((Struct) giftListObject).getAttributes();
+						
+						BigDecimal idGiftList = (BigDecimal) giftListData[0];
+						String type = (String) giftListData[1];
+						Timestamp deadLine = (Timestamp) giftListData[2];
+						boolean isActive = ((BigDecimal) giftListData[3]).intValue() == 1 ? true : false;
+						int idCustomerGiftList = ((BigDecimal) giftListData[4]).intValue();
+						
+						//add own list to customerLog
+						if(id == idCustomerGiftList) {
+							Customer owner = new Customer();
+							owner.setId(id);
+							GiftList giftList = new GiftList(idGiftList.intValue(), type, isActive, null, owner);
+							if (deadLine != null) {
+								giftList.setDeadLine(deadLine.toLocalDateTime().toLocalDate());
+							}
+							customer.addGiftList(giftList);
+						}
+						//add friends list to customerLog
+						else {
+							Customer friend = new Customer();
+							friend.setId(idCustomerGiftList);
+							GiftList giftList = new GiftList(idGiftList.intValue(), type, isActive, null, friend);
+							if (deadLine != null) {
+								giftList.setDeadLine(deadLine.toLocalDateTime().toLocalDate());
+							}
+							customer.addOtherCustomerGiftList(giftList);
+						}
+					}
+				}
+			}
+			
+			//get customer Notification Message
+			
+			cstmt.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return customer;
 	}
 
 	@Override
@@ -81,11 +151,11 @@ public class CustomerDAO extends DAO<Customer> {
 		Customer customerLog = null;
 		try {
 			//call procedure
-			CallableStatement cstmt = this.connection.prepareCall("{call authenticate_Customer(?,?,?,?)}");
+			CallableStatement cstmt = this.connection.prepareCall("{call authenticate_Customer(?,?,?)}");
 			
 			//IN parameters
-			cstmt.setString(3, email);
-			cstmt.setString(4, password);
+			cstmt.setString(2, email);
+			cstmt.setString(3, password);
 			
 			//define a specify structure
 //			Struct customer_object = this.connection.createStruct("CUSTOMER_OBJECT",
@@ -93,14 +163,12 @@ public class CustomerDAO extends DAO<Customer> {
 			
 			//OUT parameters
 			cstmt.registerOutParameter(1, Types.STRUCT, "CUSTOMER_OBJECT");
-			cstmt.registerOutParameter(2, Types.ARRAY, "T_GIFTLIST_OBJECT");
 			
 			//execute
 			cstmt.executeQuery();
 			
 			//get OUT parameters result
 			Struct customerObject = (Struct) cstmt.getObject(1);
-			Array tabGiftListObject = cstmt.getArray(2);
 			
 			//get customer
 			if(customerObject != null) {
@@ -112,41 +180,6 @@ public class CustomerDAO extends DAO<Customer> {
 				String emailCustomer = (String) dataCustomer[3];
 				
 				customerLog = new Customer(id, emailCustomer, null, firstname, lastname);
-				
-				//get customer giftLists
-				if(tabGiftListObject != null) {
-					Object[] dataTabGiftListObject = (Object[]) tabGiftListObject.getArray();
-					for(Object giftListObject : dataTabGiftListObject) {
-						Object[] giftListData = ((Struct) giftListObject).getAttributes();
-						
-						BigDecimal idGiftList = (BigDecimal) giftListData[0];
-						String type = (String) giftListData[1];
-						Timestamp deadLine = (Timestamp) giftListData[2];
-						boolean isActive = ((BigDecimal) giftListData[3]).intValue() == 1 ? true : false;
-						int idCustomerGiftList = ((BigDecimal) giftListData[4]).intValue();
-						
-						//add own list to customerLog
-						if(customerLog.getId() == idCustomerGiftList) {
-							Customer owner = new Customer();
-							owner.setId(customerLog.getId());
-							GiftList giftList = new GiftList(idGiftList.intValue(), type, isActive, null, owner);
-							if (deadLine != null) {
-								giftList.setDeadLine(deadLine.toLocalDateTime().toLocalDate());
-							}
-							customerLog.addGiftList(giftList);
-						}
-						//add friends list to customerLog
-						else {
-							Customer friends = new Customer();
-							friends.setId(idCustomerGiftList);
-							GiftList giftList = new GiftList(idGiftList.intValue(), type, isActive, null, friends);
-							if (deadLine != null) {
-								giftList.setDeadLine(deadLine.toLocalDateTime().toLocalDate());
-							}
-							customerLog.addOtherCustomerGiftList(giftList);
-						}
-					}
-				}
 			}
 			
 			cstmt.close();

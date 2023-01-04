@@ -35,7 +35,7 @@ public class IndexServlet extends HttpServlet {
 		}
 		else {
 			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/JSP/Index.jsp");
-			dispatcher.forward(request, response);			
+			dispatcher.forward(request, response);
 		}
 	}
 
@@ -61,6 +61,8 @@ public class IndexServlet extends HttpServlet {
 			}
 			else {
 				errorsMessage.put("loginError", "Email et/ou mot de passe incorrect.");
+				request.setAttribute("errorsMessage", errorsMessage);
+				doGet(request, response);
 			}
 		}
 		else {
