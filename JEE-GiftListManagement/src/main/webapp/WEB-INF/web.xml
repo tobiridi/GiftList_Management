@@ -18,6 +18,7 @@
   	<filter-name>AuthenticationFilter</filter-name>
   	<servlet-name>MainPage</servlet-name>
   	<servlet-name>GiftList</servlet-name>
+  	<servlet-name>DeleteGiftList</servlet-name>
   </filter-mapping>
   
   <!-- session configuration -->
@@ -43,6 +44,11 @@
   	<servlet-class>be.Jadoulle_Declercq.Servlets.GiftListServlet</servlet-class>
   </servlet>
   
+  <servlet>
+  	<servlet-name>DeleteGiftList</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.DeleteGiftListServlet</servlet-class>
+  </servlet>
+  
   <!-- servlets mapping -->
   <servlet-mapping>
   	<servlet-name>Index</servlet-name>
@@ -66,6 +72,12 @@
   	<servlet-name>GiftList</servlet-name>
   	<url-pattern>/GiftList</url-pattern>
   	<url-pattern>/GiftListServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>DeleteGiftList</servlet-name>
+  	<url-pattern>/DeleteGiftList</url-pattern>
+  	<url-pattern>/DeleteGiftListServlet</url-pattern>
   </servlet-mapping>
   
 </web-app>

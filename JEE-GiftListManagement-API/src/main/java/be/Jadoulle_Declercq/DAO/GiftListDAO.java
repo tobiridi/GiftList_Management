@@ -70,8 +70,24 @@ public class GiftListDAO extends DAO<GiftList> {
 
 	@Override
 	public boolean delete(GiftList obj) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean success = false;
+		try {
+			CallableStatement cstmt = this.connection.prepareCall("{call delete_GiftList(?)}");
+			
+			//IN parameters
+			cstmt.setInt(1, obj.getId());
+			
+			//execute
+			int res = cstmt.executeUpdate();
+			cstmt.close();
+			
+			success = res > 0;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return success;
 	}
 
 }

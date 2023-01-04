@@ -1,10 +1,10 @@
 package be.Jadoulle_Declercq.JavaBeans;
 
 import java.io.Serializable;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import be.Jadoulle_Declercq.DAO.AbstractDAOFactory;
@@ -87,4 +87,13 @@ public class GiftList implements Serializable {
 		return adf.getGiftListDao().create(this);
 	}
 	
+	public boolean delete() {
+		AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+		return adf.getGiftListDao().delete(this);
+	}
+
+	@JsonIgnore
+	public boolean isExpired() {
+		return this.deadLine != null ? this.deadLine.isBefore(LocalDate.now()) : !this.isActive;
+	}
 }

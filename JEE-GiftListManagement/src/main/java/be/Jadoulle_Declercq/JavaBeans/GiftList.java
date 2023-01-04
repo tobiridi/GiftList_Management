@@ -82,4 +82,12 @@ public class GiftList implements Serializable {
 		return adf.getGiftListDao().create(this);
 	}
 	
+	public boolean delete() {
+		AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+		return adf.getGiftListDao().delete(this);
+	}
+	
+	public boolean isExpired() {
+		return this.deadLine != null ? this.deadLine.isBefore(LocalDate.now()) : !this.isActive;
+	}
 }

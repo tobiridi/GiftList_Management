@@ -59,8 +59,12 @@ public class GiftListDAO extends DAO<GiftList> {
 
 	@Override
 	public boolean delete(GiftList obj) {
-		// TODO Auto-generated method stub
-		return false;
+		String idString = String.valueOf(obj.getId());
+		
+		this.response = this.webResource.path("giftList").path(idString).accept(MediaType.APPLICATION_JSON)
+				.delete(ClientResponse.class, this.params);
+
+		return this.response.getStatus() == 204;
 	}
 
 }
