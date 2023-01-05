@@ -17,15 +17,15 @@ import be.Jadoulle_Declercq.JavaBeans.Customer;
 import be.Jadoulle_Declercq.JavaBeans.GiftList;
 
 /**
- * Servlet implementation class GiftListServlet
+ * Servlet implementation class ModifyGiftListServlet
  */
-public class GiftListServlet extends HttpServlet {
+public class ModifyGiftListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GiftListServlet() {
+    public ModifyGiftListServlet() {
         super();
     }
 
@@ -33,8 +33,33 @@ public class GiftListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/JSP/AddGiftList.jsp");
-		dispatcher.forward(request, response);
+		try {
+			String idGiftList = request.getParameter("id");
+			if (idGiftList != null) {
+				int idSearch = Integer.parseInt(idGiftList);
+				HttpSession session = request.getSession(false);
+				Customer customerLog = (Customer) session.getAttribute("customerLog");
+				GiftList modifyList = customerLog.getGiftList().stream().filter(gl -> gl.getId() == idSearch).findFirst().orElse(null);
+
+				if (modifyList != null) {
+					session.setAttribute("modifyList", modifyList);
+				}
+
+				RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/JSP/ModifyGiftList.jsp");
+				dispatcher.forward(request, response);
+			}
+			else if (request.getAttribute("errorsMessage") != null) {
+				RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/JSP/ModifyGiftList.jsp");
+				dispatcher.forward(request, response);
+			}
+			else {
+				response.sendRedirect("MainPage");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.sendRedirect("MainPage");
+		}
 	}
 
 	/**
@@ -42,34 +67,46 @@ public class GiftListServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HashMap<String, String> errorsMessage = new HashMap<>();
-		LocalDate giftListDeadLine = null;
-		String giftListType = request.getParameter("giftListType");
-		String giftListDeadLineParam = request.getParameter("giftListDeadLine");
+		HttpSession session = request.getSession(false);
+		GiftList modifyList = (GiftList) session.getAttribute("modifyList");
 		
-		if(giftListType != null && giftListDeadLineParam != null) {
+		String giftListType = (String) request.getParameter("giftListType");
+		String activation = (String) request.getParameter("activation");
+		String giftListDeadLineParam = (String) request.getParameter("giftListDeadLine");
+		LocalDate giftListDeadLine = null;
+		
+		if(modifyList != null && giftListType != null) {
 			try {
 				if(giftListDeadLineParam != "" && giftListDeadLineParam != null) {
 					giftListDeadLine = LocalDate.parse(giftListDeadLineParam, DateTimeFormatter.ISO_LOCAL_DATE);					
 				}
 				
 				if(this.isValidGiftList(giftListType, giftListDeadLine, errorsMessage)) {
-					HttpSession session = request.getSession(false);
-					Customer customerLog = (Customer) session.getAttribute("customerLog");
-					GiftList newGiftList = new GiftList(0, giftListType, true, giftListDeadLine, customerLog);
-					if(newGiftList.create()) {
-						request.setAttribute("successMessage", "Liste créer avec succès !");
+					modifyList.setType(giftListType);
+					if(activation == null && giftListDeadLine == null) {
+						//disable with checkBox activation
+						modifyList.setActive(false);
+					}
+					else {
+						//active with deadLine date or checkBox activation
+						modifyList.setActive(true);
+					}
+					modifyList.setDeadLine(giftListDeadLine);
+					
+					//list non updated
+					if(!modifyList.update()) {
+						errorsMessage.put("GiftListError", "Une erreur est survenue lors de la modification de la liste.");
+						request.setAttribute("errorsMessage", errorsMessage);
 						doGet(request, response);
 					}
 					else {
-						errorsMessage.put("GiftListError", "Une erreur est survenue lors de la création de la liste.");
-						request.setAttribute("errorsMessage", errorsMessage);
-						doGet(request, response);
+						//remove the list in the session after update
+						session.removeAttribute("modifyList");
+						response.sendRedirect("MainPage");
 					}
 				}
 				else {
 					request.setAttribute("errorsMessage", errorsMessage);
-					request.setAttribute("previousGiftListType", giftListType);
-					request.setAttribute("previousGiftListDeadLine", giftListDeadLineParam);
 					doGet(request, response);
 				}
 				
@@ -85,10 +122,9 @@ public class GiftListServlet extends HttpServlet {
 			}
 		}
 		else {
-			request.setAttribute("previousGiftListType", giftListType);
-			request.setAttribute("previousGiftListDeadLine", giftListDeadLineParam);
-			doGet(request, response);
+			response.sendRedirect("MainPage");
 		}
+		
 	}
 	
 	private boolean isValidGiftList(String giftListType, LocalDate giftListDeadLine, HashMap<String, String> errorsMessage) {

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import javax.ws.rs.core.MediaType;
 
+import org.json.JSONObject;
+
 import com.sun.jersey.api.client.ClientResponse;
 
 import be.Jadoulle_Declercq.JavaBeans.GiftList;
@@ -53,8 +55,14 @@ public class GiftListDAO extends DAO<GiftList> {
 
 	@Override
 	public boolean update(GiftList obj) {
-		// TODO Auto-generated method stub
-		return false;
+		JSONObject jsonObject = new JSONObject(obj);
+		String id = String.valueOf(obj.getId());
+		
+		this.response = this.webResource.path("giftList").path(id)
+				.type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
+				.put(ClientResponse.class, jsonObject.toString());
+		
+		return this.response.getStatus() == 204;
 	}
 
 	@Override

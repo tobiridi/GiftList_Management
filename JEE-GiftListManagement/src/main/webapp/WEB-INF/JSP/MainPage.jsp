@@ -37,7 +37,7 @@
 					<td><%= list.isExpired() ? "expiré" : "actif" %></td>
 					<%--TODO : add url --%>
 					<td>
-						<a href="#"><input type="button" value="Modifier"/></a>
+						<a href="ModifyGiftList?id=<%= list.getId() %>"><input type="button" value="Modifier"/></a>
 						<a href="DeleteGiftList?id=<%= list.getId() %>"><input type="button" value="Supprimer"/></a>
 						<% if(!list.isExpired()) { %>
 							<a href="#"><input type="button" value="Détails"/></a>

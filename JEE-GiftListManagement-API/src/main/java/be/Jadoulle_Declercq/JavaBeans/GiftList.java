@@ -5,9 +5,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import be.Jadoulle_Declercq.DAO.AbstractDAOFactory;
+import be.Jadoulle_Declercq.Serializers.JsonLocalDateDeserializer;
 import be.Jadoulle_Declercq.Serializers.JsonLocalDateSerializer;
 
 public class GiftList implements Serializable {
@@ -45,6 +47,7 @@ public class GiftList implements Serializable {
 	public LocalDate getDeadLine() {
 		return deadLine;
 	}
+	@JsonDeserialize(using = JsonLocalDateDeserializer.class)
 	public void setDeadLine(LocalDate deadLine) {
 		this.deadLine = deadLine;
 	}
@@ -92,6 +95,11 @@ public class GiftList implements Serializable {
 		return adf.getGiftListDao().delete(this);
 	}
 
+	public boolean update() {
+		AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+		return adf.getGiftListDao().update(this);
+	}
+	
 	@JsonIgnore
 	public boolean isExpired() {
 		return this.deadLine != null ? this.deadLine.isBefore(LocalDate.now()) : !this.isActive;

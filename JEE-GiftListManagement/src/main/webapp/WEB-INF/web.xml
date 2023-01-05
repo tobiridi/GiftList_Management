@@ -19,6 +19,7 @@
   	<servlet-name>MainPage</servlet-name>
   	<servlet-name>GiftList</servlet-name>
   	<servlet-name>DeleteGiftList</servlet-name>
+  	<servlet-name>ModifyGiftList</servlet-name>
   </filter-mapping>
   
   <!-- session configuration -->
@@ -47,6 +48,11 @@
   <servlet>
   	<servlet-name>DeleteGiftList</servlet-name>
   	<servlet-class>be.Jadoulle_Declercq.Servlets.DeleteGiftListServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>ModifyGiftList</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.ModifyGiftListServlet</servlet-class>
   </servlet>
   
   <!-- servlets mapping -->
@@ -78,6 +84,12 @@
   	<servlet-name>DeleteGiftList</servlet-name>
   	<url-pattern>/DeleteGiftList</url-pattern>
   	<url-pattern>/DeleteGiftListServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>ModifyGiftList</servlet-name>
+  	<url-pattern>/ModifyGiftList</url-pattern>
+  	<url-pattern>/ModifyGiftListServlet</url-pattern>
   </servlet-mapping>
   
 </web-app>

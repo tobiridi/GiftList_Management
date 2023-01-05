@@ -64,13 +64,35 @@ public class GiftListDAO extends DAO<GiftList> {
 
 	@Override
 	public boolean update(GiftList obj) {
-		// TODO Auto-generated method stub
+		try {
+			CallableStatement cstmt = this.connection.prepareCall("{call update_GiftList(?,?,?,?)}");
+			
+			//IN parameters
+			cstmt.setInt(1, obj.getId());
+			cstmt.setString(2, obj.getType());
+			
+			if(obj.getDeadLine() == null)
+				cstmt.setDate(3, null);
+			else
+				cstmt.setDate(3, Date.valueOf(obj.getDeadLine()));
+			
+			cstmt.setInt(4, obj.isActive() ? 1 : 0);
+			
+			//execute
+			int res = cstmt.executeUpdate();
+			cstmt.close();
+			
+			return res > 0;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+			
 		return false;
 	}
 
 	@Override
 	public boolean delete(GiftList obj) {
-		boolean success = false;
 		try {
 			CallableStatement cstmt = this.connection.prepareCall("{call delete_GiftList(?)}");
 			
@@ -81,13 +103,13 @@ public class GiftListDAO extends DAO<GiftList> {
 			int res = cstmt.executeUpdate();
 			cstmt.close();
 			
-			success = res > 0;
+			return res > 0;
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return success;
+		return false;
 	}
 
 }
