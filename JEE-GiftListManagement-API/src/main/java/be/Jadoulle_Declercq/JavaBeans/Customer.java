@@ -17,8 +17,8 @@ public class Customer implements Serializable {
 	private String lastname;
 	private ArrayList<GiftList> giftList;
 	private ArrayList<GiftList> otherCustomerList;
-	//TODO : "GiftsOffered, NotificationMessage" references
-	
+	private ArrayList<NotificationMessage> messageBox;
+	//TODO : "GiftsOffered" references
 	
 	public int getId() {
 		return id;
@@ -69,6 +69,13 @@ public class Customer implements Serializable {
 		this.otherCustomerList = otherCustomerList;
 	}
 
+	public ArrayList<NotificationMessage> getMessageBox() {
+		return messageBox;
+	}
+	public void setMessageBox(ArrayList<NotificationMessage> messageBox) {
+		this.messageBox = messageBox;
+	}
+	
 	//CONSTRUCTOR
 	public Customer(int id, String email, String password, String firstname, String lastname) {
 		this();
@@ -82,6 +89,7 @@ public class Customer implements Serializable {
 	public Customer() {
 		this.giftList = new ArrayList<>();
 		this.otherCustomerList = new ArrayList<>();
+		this.messageBox = new ArrayList<>();
 	}
 	
 	//methods
@@ -107,5 +115,13 @@ public class Customer implements Serializable {
 	
 	public boolean addOtherCustomerGiftList(GiftList giftlist) {
 		return this.otherCustomerList.add(giftlist);
+	}
+	
+	public boolean addNotificationMessage(NotificationMessage notif) {
+		return this.messageBox.add(notif);
+	}
+	
+	public boolean hasUnreadMessage() {
+		return this.messageBox.stream().filter(m -> !m.isRead()).count() > 0;
 	}
 }

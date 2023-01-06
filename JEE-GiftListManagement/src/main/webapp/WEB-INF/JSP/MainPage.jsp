@@ -1,5 +1,7 @@
 <%@ page import="java.time.format.DateTimeFormatter"%>
+<%@ page import="java.util.ArrayList"%>
 <%@ page import="be.Jadoulle_Declercq.JavaBeans.GiftList" %>
+<%@ page import="be.Jadoulle_Declercq.JavaBeans.NotificationMessage" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -10,11 +12,10 @@
 <title>Page principal</title>
 </head>
 <body>
+	<jsp:useBean id="customerLog" class="be.Jadoulle_Declercq.JavaBeans.Customer" scope="session"></jsp:useBean>
 	<jsp:include page="NavBar.jsp">
 		<jsp:param value="1" name="pageIndex"/>
 	</jsp:include>
-	
-	<jsp:useBean id="customerLog" class="be.Jadoulle_Declercq.JavaBeans.Customer" scope="session"></jsp:useBean>
 	
 	<h1>vous êtes sur la page principal</h1>
 	<h2>Vos listes</h2>

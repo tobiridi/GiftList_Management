@@ -8,10 +8,12 @@ import java.sql.SQLException;
 import java.sql.Struct;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import be.Jadoulle_Declercq.JavaBeans.Customer;
 import be.Jadoulle_Declercq.JavaBeans.GiftList;
+import be.Jadoulle_Declercq.JavaBeans.NotificationMessage;
 
 public class CustomerDAO extends DAO<Customer> {
 
@@ -24,14 +26,15 @@ public class CustomerDAO extends DAO<Customer> {
 		Customer customer = null;
 		try {
 			//call procedure
-			CallableStatement cstmt = this.connection.prepareCall("{call get_Customer(?,?,?)}");
+			CallableStatement cstmt = this.connection.prepareCall("{call get_Customer(?,?,?,?)}");
 			
 			//IN parameters
-			cstmt.setInt(3, id);
+			cstmt.setInt(4, id);
 			
 			//OUT parameters
 			cstmt.registerOutParameter(1, Types.STRUCT, "CUSTOMER_OBJECT");
 			cstmt.registerOutParameter(2, Types.ARRAY, "T_GIFTLIST_OBJECT");
+			cstmt.registerOutParameter(3, Types.ARRAY, "T_NOTIFICATIONMESSAGE_OBJECT");
 			
 			//execute
 			cstmt.executeQuery();
@@ -39,6 +42,7 @@ public class CustomerDAO extends DAO<Customer> {
 			//get OUT parameters result
 			Struct customerObject = (Struct) cstmt.getObject(1);
 			Array tabGiftListObject = cstmt.getArray(2);
+			Array tabMessageObject = cstmt.getArray(3);
 			
 			//get customer
 			if(customerObject != null) {
@@ -84,9 +88,25 @@ public class CustomerDAO extends DAO<Customer> {
 						}
 					}
 				}
+				//get customer Notification Message
+				if(tabMessageObject != null) {
+					Object[] dataTabMessageObject = (Object[]) tabMessageObject.getArray();
+					for(Object messageObject : dataTabMessageObject) {
+						Object[] messageData = ((Struct) messageObject).getAttributes();
+						
+						int idMessage = ((BigDecimal) messageData[0]).intValue();
+						String title = (String) messageData[1];
+						String message = (String) messageData[2];
+						LocalDate notifDate = ((Timestamp) messageData[3]).toLocalDateTime().toLocalDate();
+						boolean isRead = ((BigDecimal) messageData[4]).intValue() == 1 ? true : false;
+						
+						Customer recipient = new Customer();
+						recipient.setId(id);
+						NotificationMessage notif = new NotificationMessage(idMessage, title, message, notifDate, isRead, recipient);
+						customer.addNotificationMessage(notif);
+					}
+				}
 			}
-			
-			//get customer Notification Message
 			
 			cstmt.close();
 			
