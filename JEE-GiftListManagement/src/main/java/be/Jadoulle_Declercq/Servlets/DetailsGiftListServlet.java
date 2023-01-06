@@ -33,9 +33,6 @@ public class DetailsGiftListServlet extends HttpServlet {
 			try {
 				int idList = Integer.parseInt(idGiftList);
 				GiftList detailGiftList = GiftList.get(idList);
-				System.out.println("list recu : " + detailGiftList.getId() + " " + detailGiftList.getType() + " " + detailGiftList.getGifts().size());
-				
-				//TODO : not finished
 				if(detailGiftList != null) {
 					request.setAttribute("detailGiftList", detailGiftList);
 					RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/JSP/DetailsGiftList.jsp");

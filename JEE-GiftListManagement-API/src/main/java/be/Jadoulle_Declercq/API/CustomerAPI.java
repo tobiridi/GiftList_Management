@@ -30,7 +30,7 @@ public class CustomerAPI {
 			}
 		}
 		
-		return Response.status(Status.BAD_REQUEST).entity("not found").build();
+		return Response.status(Status.BAD_REQUEST).build();
 	}
 	
 	@POST

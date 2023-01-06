@@ -6,6 +6,7 @@ import java.time.format.DateTimeParseException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -20,6 +21,24 @@ import be.Jadoulle_Declercq.JavaBeans.GiftList;
 
 @Path("/giftList")
 public class GiftListAPI {
+	
+	@GET
+	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getGiftList(@PathParam("id") int id) {
+		if(id > 0) {
+			GiftList getList = GiftList.get(id);
+			
+			if(getList != null) {
+				return Response.status(Status.OK).entity(getList).build();
+			}
+			else {
+				return Response.status(Status.NOT_FOUND).build();
+			}
+		}
+		
+		return Response.status(Status.BAD_REQUEST).build();
+	}
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)

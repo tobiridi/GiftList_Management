@@ -7,8 +7,10 @@ import javax.ws.rs.core.MediaType;
 
 import org.json.JSONObject;
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.sun.jersey.api.client.ClientResponse;
 
+import be.Jadoulle_Declercq.JavaBeans.Customer;
 import be.Jadoulle_Declercq.JavaBeans.GiftList;
 
 public class GiftListDAO extends DAO<GiftList> {
@@ -19,8 +21,29 @@ public class GiftListDAO extends DAO<GiftList> {
 	
 	@Override
 	public GiftList find(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		String idGiftList = String.valueOf(id);
+		GiftList list = null;
+		
+		this.response = this.webResource.path("giftList").path(idGiftList)
+				.accept(MediaType.APPLICATION_JSON)
+				.get(ClientResponse.class);
+		
+		if(this.response.getStatus() == 200) {
+			String apiResponse = this.response.getEntity(String.class);
+			
+			try {
+				//create giftList
+				JSONObject json = new JSONObject(apiResponse);
+				//add LocalDate parsing
+				this.mapper.registerModule(new JavaTimeModule());
+				list = this.mapper.readValue(json.toString(), GiftList.class);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return list;
 	}
 
 	@Override
