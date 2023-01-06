@@ -3,7 +3,9 @@ package be.Jadoulle_Declercq.DAO;
 import java.sql.Connection;
 
 import be.Jadoulle_Declercq.JavaBeans.Customer;
+import be.Jadoulle_Declercq.JavaBeans.Gift;
 import be.Jadoulle_Declercq.JavaBeans.GiftList;
+import be.Jadoulle_Declercq.JavaBeans.NotificationMessage;
 
 public class DAOFactory extends AbstractDAOFactory {
 	private static final Connection connection = DatabaseConnection.getInstance();
@@ -18,4 +20,13 @@ public class DAOFactory extends AbstractDAOFactory {
 		return new GiftListDAO(connection);
 	}
 
+	@Override
+	public DAO<Gift> getGiftDao() {
+		return new GiftDAO(connection);
+	}
+	
+	@Override
+	public DAO<NotificationMessage> getNotificationMessageDao() {
+		return new NotificationMessageDAO(connection);
+	}
 }

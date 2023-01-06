@@ -15,6 +15,7 @@ public class GiftList implements Serializable {
 	private LocalDate deadLine;
 	private Customer ownerList;
 	private ArrayList<Customer> customerShared;
+	private ArrayList<Gift> gifts;
 	
 	public int getId() {
 		return id;
@@ -57,10 +58,18 @@ public class GiftList implements Serializable {
 	public void setCustomerShared(ArrayList<Customer> customerShared) {
 		this.customerShared = customerShared;
 	}
+	
+	public ArrayList<Gift> getGifts() {
+		return gifts;
+	}
+	public void setGifts(ArrayList<Gift> gifts) {
+		this.gifts = gifts;
+	}
 
 	//CONSTRUCTOR
 	public GiftList() {
 		this.customerShared = new ArrayList<>();
+		this.gifts = new ArrayList<>();
 	}
 	
 	public GiftList(int id, String type, boolean isActive, LocalDate deadLine, Customer ownerList) {
@@ -90,6 +99,11 @@ public class GiftList implements Serializable {
 	public boolean update() {
 		AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 		return adf.getGiftListDao().update(this);
+	}
+	
+	public static GiftList get(int id) {
+		AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+		return adf.getGiftListDao().find(id);
 	}
 	
 	public boolean isExpired() {

@@ -40,7 +40,7 @@
 						<a href="ModifyGiftList?id=<%= list.getId() %>"><input type="button" value="Modifier"/></a>
 						<a href="DeleteGiftList?id=<%= list.getId() %>"><input type="button" value="Supprimer"/></a>
 						<% if(!list.isExpired()) { %>
-							<a href="#"><input type="button" value="Détails"/></a>
+							<a href="DetailsGiftList?id=<%= list.getId() %>"><input type="button" value="Détails"/></a>
 						<% } %>
 					</td>
 				</tr>

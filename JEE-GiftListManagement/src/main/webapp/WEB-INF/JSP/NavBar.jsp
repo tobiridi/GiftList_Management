@@ -31,7 +31,7 @@
 					<span class="navigation-icon">
 						<ion-icon name="list-outline"></ion-icon>
 					</span>
-					<span class="navigation-text">Ajouter une liste</span>
+					<span class="navigation-text">Liste de cadeaux</span>
 				</a>
 			</li>
 			<li class="list">
