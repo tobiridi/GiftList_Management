@@ -5,10 +5,24 @@
     <welcome-file>Index.html</welcome-file>
     <welcome-file>Index.jsp</welcome-file>
   </welcome-file-list>
+  <!-- context parameters -->
   
   <!-- filters declaration -->
+  <filter>
+  	<filter-name>AuthenticationFilter</filter-name>
+  	<filter-class>be.Jadoulle_Declercq.Filters.AuthenticationFilter</filter-class>
+  </filter>
   
   <!-- filters mapping -->
+  <filter-mapping>
+  	<filter-name>AuthenticationFilter</filter-name>
+  	<servlet-name>MainPage</servlet-name>
+  	<servlet-name>GiftList</servlet-name>
+  	<servlet-name>DeleteGiftList</servlet-name>
+  	<servlet-name>ModifyGiftList</servlet-name>
+  </filter-mapping>
+  
+  <!-- session configuration -->
   
   <!-- servlets declaration -->
   <servlet>
@@ -26,6 +40,20 @@
   	<servlet-class>be.Jadoulle_Declercq.Servlets.MainPageServlet</servlet-class>
   </servlet>
   
+  <servlet>
+  	<servlet-name>GiftList</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.GiftListServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>DeleteGiftList</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.DeleteGiftListServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>ModifyGiftList</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.ModifyGiftListServlet</servlet-class>
+  </servlet>
   
   <!-- servlets mapping -->
   <servlet-mapping>
@@ -46,8 +74,22 @@
   	<url-pattern>/MainPageServlet</url-pattern>
   </servlet-mapping>
   
-  <!-- context parameters -->
-    
-  <!-- session configuration -->
+  <servlet-mapping>
+  	<servlet-name>GiftList</servlet-name>
+  	<url-pattern>/GiftList</url-pattern>
+  	<url-pattern>/GiftListServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>DeleteGiftList</servlet-name>
+  	<url-pattern>/DeleteGiftList</url-pattern>
+  	<url-pattern>/DeleteGiftListServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>ModifyGiftList</servlet-name>
+  	<url-pattern>/ModifyGiftList</url-pattern>
+  	<url-pattern>/ModifyGiftListServlet</url-pattern>
+  </servlet-mapping>
   
 </web-app>

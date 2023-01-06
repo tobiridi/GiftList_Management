@@ -1,8 +1,10 @@
 package be.Jadoulle_Declercq.API;
 
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -13,6 +15,24 @@ import be.Jadoulle_Declercq.JavaBeans.Customer;
 @Path("/customer")
 public class CustomerAPI {
 
+	@GET
+	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getCustomer(@PathParam("id") int id) {
+		if(id > 0) {
+			Customer customer = Customer.get(id);
+
+			if (customer != null) {
+				return Response.status(Status.OK).entity(customer).build();
+			}
+			else {
+				return Response.status(Status.NOT_FOUND).build();
+			}
+		}
+		
+		return Response.status(Status.BAD_REQUEST).entity("not found").build();
+	}
+	
 	@POST
 	@Path("auth")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -58,6 +78,5 @@ public class CustomerAPI {
 		}
 		
 		return Response.status(Status.BAD_REQUEST).build();
-		
 	}
 }

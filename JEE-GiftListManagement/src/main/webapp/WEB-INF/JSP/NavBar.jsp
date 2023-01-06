@@ -4,8 +4,7 @@
 	<div class="navigation">
 		<ul>
 			<li class="list">
-				<%-- TODO : url --%>
-				<a href="#">
+				<a href="MainPage">
 					<span class="navigation-icon">
 						<ion-icon name="home-outline"></ion-icon>
 					</span>
@@ -22,8 +21,7 @@
 				</a>
 			</li>
 			<li class="list">
-				<%-- TODO : url --%>
-				<a href="#">
+				<a href="GiftList">
 					<span class="navigation-icon">
 						<ion-icon name="list-outline"></ion-icon>
 					</span>

@@ -1,7 +1,7 @@
 /* Main/Global CSS */
 body {
-	margin: 0;
-	padding: 0;
+	margin: 5;
+	padding: 5;
 	box-sizing: border-box;
 	background-color: #eaf0f0;
 }
@@ -20,13 +20,13 @@ h1 {
 	margin: 5px;
 	padding: 5px;
 }
-.loginForm {
+form {
 	display: flex;
-	justify-content: flex-start;
+	justify-content: center;
 	align-items: center;
 	flex-direction: column;
 }
-.loginForm input {
+form input {
 	margin: 5px;
 	padding: 5px;
 }
@@ -37,10 +37,62 @@ h1 {
 	flex-direction: column;
 }
 .successMessage p {
-	color: #1fbd55;
+	color: #33b54f;
 	font-weight: 500;
 	margin: 5px;
 	padding: 5px;
+}
+
+/* button */
+.btnConfirm {
+	border: none;
+	outline: none;
+	background-color: #428bca;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: 0.5s;
+	padding: 10px;
+}
+.btnConfirm:hover {
+	font-size: 1.1em;
+}
+.btnCancel {
+	border: none;
+	outline: none;
+	background-color: #99aab5;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: 0.5s;
+	padding: 10px;
+}
+.btnCancel:hover {
+	font-size: 1.1em;
+}
+
+/* table */
+table {
+	font-size: 1.1em;
+	margin-left: auto;
+	margin-right: auto;
+}
+table, th, td {
+	border: 1px solid #000;
+}
+td {
+	text-align: center;
+	padding-top: 5px;
+	padding-left: 10px;
+	padding-bottom: 5px;
+	padding-right: 10px;
+}
+td a input[type="button"] {
+	border: none;
+	outline: none;
+	background-color: #54b4d3;
+	border-radius: 5px;
+	cursor: pointer;
+	padding: 10px;
+	color: #fff;
 }
 
 /* navigation bar */

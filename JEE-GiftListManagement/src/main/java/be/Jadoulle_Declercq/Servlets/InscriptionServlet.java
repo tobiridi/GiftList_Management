@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import be.Jadoulle_Declercq.JavaBeans.Customer;
 
@@ -29,8 +30,14 @@ public class InscriptionServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/JSP/Inscription.jsp");
-		dispatcher.forward(request, response);
+		HttpSession session = request.getSession(true);
+		if(session.getAttribute("customerLog") != null) {
+			response.sendRedirect("MainPage");
+		}
+		else {
+			RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/JSP/Inscription.jsp");
+			dispatcher.forward(request, response);
+		}
 	}
 
 	/**
@@ -52,10 +59,6 @@ public class InscriptionServlet extends HttpServlet {
 			else {
 				errorsMessage.put("inscriptionError", "Une erreur est survenue lors de l'inscription.");
 				request.setAttribute("errorsMessage", errorsMessage);
-				request.setAttribute("previousEmail", email);
-				request.setAttribute("previousPassword", password);
-				request.setAttribute("previousFirstname", firstname);
-				request.setAttribute("previousLastname", lastname);
 				doGet(request, response);
 			}
 		}

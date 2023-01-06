@@ -1,6 +1,7 @@
 package be.Jadoulle_Declercq.JavaBeans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import be.Jadoulle_Declercq.DAO.AbstractDAOFactory;
 import be.Jadoulle_Declercq.DAO.CustomerDAO;
@@ -14,7 +15,9 @@ public class Customer implements Serializable {
 	private String password;
 	private String firstname;
 	private String lastname;
-	//TODO : "GiftList, GiftList, GiftsOffered, NotificationMessage" references
+	private ArrayList<GiftList> giftList;
+	private ArrayList<GiftList> otherCustomerList;
+	//TODO : "GiftsOffered, NotificationMessage" references
 	
 	
 	public int getId() {
@@ -51,9 +54,24 @@ public class Customer implements Serializable {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
+	
+	public ArrayList<GiftList> getGiftList() {
+		return giftList;
+	}
+	public void setGiftList(ArrayList<GiftList> giftList) {
+		this.giftList = giftList;
+	}
+	
+	public ArrayList<GiftList> getOtherCustomerList() {
+		return otherCustomerList;
+	}
+	public void setOtherCustomerList(ArrayList<GiftList> otherCustomerList) {
+		this.otherCustomerList = otherCustomerList;
+	}
 
 	//CONSTRUCTOR
 	public Customer(int id, String email, String password, String firstname, String lastname) {
+		this();
 		this.id = id;
 		this.email = email;
 		this.password = password;
@@ -62,7 +80,8 @@ public class Customer implements Serializable {
 	}
 
 	public Customer() {
-		
+		this.giftList = new ArrayList<>();
+		this.otherCustomerList = new ArrayList<>();
 	}
 	
 	//methods
@@ -72,8 +91,21 @@ public class Customer implements Serializable {
 		return ((CustomerDAO) customerDao).authenticate(email, password);
 	}
 	
+	public static Customer get(int id) {
+		AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+		return adf.getCustomerDao().find(id);
+	}
+	
 	public boolean create() {
 		AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 		return adf.getCustomerDao().create(this);
+	}
+	
+	public boolean addGiftList(GiftList giftlist) {
+		return this.giftList.add(giftlist);
+	}
+	
+	public boolean addOtherCustomerGiftList(GiftList giftlist) {
+		return this.otherCustomerList.add(giftlist);
 	}
 }
