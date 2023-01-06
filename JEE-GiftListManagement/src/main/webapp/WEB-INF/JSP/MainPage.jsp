@@ -36,7 +36,6 @@
 					<td><%= list.getType() %></td>
 					<td><%= list.getDeadLine() != null ? list.getDeadLine().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) : "aucune date défini" %></td>
 					<td><%= list.isExpired() ? "expiré" : "actif" %></td>
-					<%--TODO : add url --%>
 					<td>
 						<a href="ModifyGiftList?id=<%= list.getId() %>"><input type="button" value="Modifier"/></a>
 						<a href="DeleteGiftList?id=<%= list.getId() %>"><input type="button" value="Supprimer"/></a>
@@ -70,9 +69,9 @@
 					<td><%= list.getType() %></td>
 					<td><%= list.getDeadLine() != null ? list.getDeadLine().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) : "aucune date défini" %></td>
 					<td><%= list.isExpired() ? "expiré" : "actif" %></td>
-					<%--TODO : add url --%>
 					<% if(!list.isExpired()) { %>
 						<td>
+							<%--TODO : add url --%>
 							<a href="#"><input type="button" value="Détails"/></a>
 						</td>
 					<% } %>

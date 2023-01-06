@@ -35,8 +35,7 @@
 				</a>
 			</li>
 			<li class="list">
-				<%-- TODO : url --%>
-				<a href="#">
+				<a href="NotificationMessage">
 					<span class="navigation-icon">
 						<% if(customerLog.hasUnreadMessage()) { %>
 							<ion-icon name="mail-unread-outline"></ion-icon>

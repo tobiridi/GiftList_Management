@@ -20,6 +20,7 @@
   	<servlet-name>GiftList</servlet-name>
   	<servlet-name>DeleteGiftList</servlet-name>
   	<servlet-name>ModifyGiftList</servlet-name>
+  	<servlet-name>NotificationMessage</servlet-name>
   </filter-mapping>
   
   <!-- session configuration -->
@@ -55,41 +56,59 @@
   	<servlet-class>be.Jadoulle_Declercq.Servlets.ModifyGiftListServlet</servlet-class>
   </servlet>
   
+  <servlet>
+  	<servlet-name>NotificationMessage</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.NotificationMessageServlet</servlet-class>
+  </servlet>
+  
   <!-- servlets mapping -->
   <servlet-mapping>
   	<servlet-name>Index</servlet-name>
   	<url-pattern>/Index</url-pattern>
+  	<url-pattern>/index</url-pattern>
   	<url-pattern>/IndexServlet</url-pattern>
   </servlet-mapping>
   
   <servlet-mapping>
   	<servlet-name>Inscription</servlet-name>
   	<url-pattern>/Inscription</url-pattern>
+  	<url-pattern>/inscription</url-pattern>
   	<url-pattern>/InscriptionServlet</url-pattern>
   </servlet-mapping>
   
   <servlet-mapping>
   	<servlet-name>MainPage</servlet-name>
   	<url-pattern>/MainPage</url-pattern>
+  	<url-pattern>/mainPage</url-pattern>
   	<url-pattern>/MainPageServlet</url-pattern>
   </servlet-mapping>
   
   <servlet-mapping>
   	<servlet-name>GiftList</servlet-name>
   	<url-pattern>/GiftList</url-pattern>
+  	<url-pattern>/giftList</url-pattern>
   	<url-pattern>/GiftListServlet</url-pattern>
   </servlet-mapping>
   
   <servlet-mapping>
   	<servlet-name>DeleteGiftList</servlet-name>
   	<url-pattern>/DeleteGiftList</url-pattern>
+  	<url-pattern>/deleteGiftList</url-pattern>
   	<url-pattern>/DeleteGiftListServlet</url-pattern>
   </servlet-mapping>
   
   <servlet-mapping>
   	<servlet-name>ModifyGiftList</servlet-name>
   	<url-pattern>/ModifyGiftList</url-pattern>
+  	<url-pattern>/modifyGiftList</url-pattern>
   	<url-pattern>/ModifyGiftListServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>NotificationMessage</servlet-name>
+  	<url-pattern>/NotificationMessage</url-pattern>
+  	<url-pattern>/notificationMessage</url-pattern>
+  	<url-pattern>/NotificationMessageServlet</url-pattern>
   </servlet-mapping>
   
 </web-app>
