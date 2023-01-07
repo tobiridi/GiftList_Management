@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.ws.rs.core.MediaType;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -30,7 +31,6 @@ public class CustomerDAO extends DAO<Customer> {
 			String apiResponse = this.response.getEntity(String.class);
 			
 			try {
-				//create customer
 				JSONObject json = new JSONObject(apiResponse);
 				//add LocalDate parsing
 				this.mapper.registerModule(new JavaTimeModule());
@@ -46,8 +46,30 @@ public class CustomerDAO extends DAO<Customer> {
 
 	@Override
 	public ArrayList<Customer> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Customer> allCustomers = null;
+		
+		this.response = this.webResource.path("customer").accept(MediaType.APPLICATION_JSON)
+				.get(ClientResponse.class);
+		
+		if(this.response.getStatus() == 200) {
+			String apiResponse = this.response.getEntity(String.class);
+			allCustomers = new ArrayList<>();
+			try {
+				JSONArray json = new JSONArray(apiResponse);
+				
+				//add LocalDate parsing
+				this.mapper.registerModule(new JavaTimeModule());
+				for (int i = 0; i < json.length(); i++) {
+					JSONObject objectJson = json.getJSONObject(i);
+					Customer customer = this.mapper.readValue(objectJson.toString(), Customer.class);
+					allCustomers.add(customer);
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return allCustomers;
 	}
 
 	@Override
@@ -96,7 +118,6 @@ public class CustomerDAO extends DAO<Customer> {
 			String apiResponse = this.response.getEntity(String.class);
 			
 			try {
-				//create customer
 				JSONObject json = new JSONObject(apiResponse);
 				//add LocalDate parsing
 				this.mapper.registerModule(new JavaTimeModule());

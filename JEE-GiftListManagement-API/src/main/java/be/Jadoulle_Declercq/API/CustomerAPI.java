@@ -1,5 +1,7 @@
 package be.Jadoulle_Declercq.API;
 
+import java.util.ArrayList;
+
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,7 +16,19 @@ import be.Jadoulle_Declercq.JavaBeans.Customer;
 
 @Path("/customer")
 public class CustomerAPI {
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllCustomer() {
+		ArrayList<Customer> allCustomers = Customer.getAll();
 
+		if (allCustomers != null) {
+			return Response.status(Status.OK).entity(allCustomers).build();
+		} else {
+			return Response.status(Status.NOT_FOUND).build();
+		}
+	}
+	
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)

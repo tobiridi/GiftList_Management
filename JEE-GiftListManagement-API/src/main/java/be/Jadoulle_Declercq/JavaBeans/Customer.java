@@ -112,6 +112,11 @@ public class Customer implements Serializable {
 		return adf.getCustomerDao().find(id);
 	}
 	
+	public static ArrayList<Customer> getAll() {
+		AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+		return adf.getCustomerDao().findAll();
+	}
+	
 	public boolean create() {
 		AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 		return adf.getCustomerDao().create(this);

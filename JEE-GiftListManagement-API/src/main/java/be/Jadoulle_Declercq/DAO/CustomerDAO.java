@@ -119,8 +119,43 @@ public class CustomerDAO extends DAO<Customer> {
 
 	@Override
 	public ArrayList<Customer> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Customer> allCustomers = null;
+		try {
+			//call procedure
+			CallableStatement cstmt = this.connection.prepareCall("{call get_all_Customer(?)}");
+			
+			//OUT parameters
+			cstmt.registerOutParameter(1, Types.ARRAY, "T_CUSTOMER_OBJECT");
+			
+			//execute
+			cstmt.executeQuery();
+			
+			//get OUT parameters result
+			Array tabCustomerObject = cstmt.getArray(1);
+			
+			if(tabCustomerObject != null ) {
+				allCustomers = new ArrayList<>();
+				Object[] dataTabCustomerObject = (Object[]) tabCustomerObject.getArray();
+				for(Object customerObject : dataTabCustomerObject) {
+					Object[] customerData = ((Struct) customerObject).getAttributes();
+					
+					int id = ((BigDecimal) customerData[0]).intValue();
+					String firstname = (String) customerData[1];
+					String lastname = (String) customerData[2];
+					String email = (String) customerData[3];
+					
+					Customer customer = new Customer(id, email, null, lastname, firstname);
+					allCustomers.add(customer);
+				}
+			}
+			
+			cstmt.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return allCustomers;
 	}
 
 	@Override

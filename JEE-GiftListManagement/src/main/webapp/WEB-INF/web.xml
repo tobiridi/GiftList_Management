@@ -23,6 +23,7 @@
   	<servlet-name>NotificationMessage</servlet-name>
   	<servlet-name>DetailsGiftList</servlet-name>
   	<servlet-name>AddGift</servlet-name>
+  	<servlet-name>ShareGiftList</servlet-name>
   </filter-mapping>
   
   <!-- session configuration -->
@@ -77,6 +78,11 @@
   		<max-request-size>3145728</max-request-size>
   		<file-size-threshold>1048000</file-size-threshold>
   	</multipart-config>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>ShareGiftList</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.ShareGiftListServlet</servlet-class>
   </servlet>
   
   <!-- servlets mapping -->
@@ -141,6 +147,13 @@
   	<url-pattern>/AddGift</url-pattern>
   	<url-pattern>/addGift</url-pattern>
   	<url-pattern>/AddGiftServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>ShareGiftList</servlet-name>
+  	<url-pattern>/ShareGiftList</url-pattern>
+  	<url-pattern>/shareGiftList</url-pattern>
+  	<url-pattern>/ShareGiftListServlet</url-pattern>
   </servlet-mapping>
   
 </web-app>

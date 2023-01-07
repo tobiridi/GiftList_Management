@@ -17,7 +17,7 @@
 		<jsp:param value="1" name="pageIndex"/>
 	</jsp:include>
 	
-	<h1>vous êtes sur la page principal</h1>
+	<h1>Vous êtes sur la page principal</h1>
 	<h2>Vos listes</h2>
 	<hr>
 	<% if(!customerLog.getGiftList().isEmpty()) { %>

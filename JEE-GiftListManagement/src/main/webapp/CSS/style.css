@@ -105,7 +105,7 @@ td input[type="button"]  {
 }
 .navigation {
 	position: relative;
-	width: 700px;
+	width: 875px;
 	height: 70px;
 	display: flex;
 	justify-content: center;
@@ -115,7 +115,7 @@ td input[type="button"]  {
 }
 .navigation ul {
 	display: flex;
-	width: 700px;
+	width: 875px;
 }
 .navigation ul li {
 	list-style: none;

@@ -18,12 +18,11 @@
 				</a>
 			</li>
 			<li class="list">
-				<%-- TODO : url --%>
-				<a href="#">
+				<a href="ShareGiftList">
 					<span class="navigation-icon">
 						<ion-icon name="person-add-outline"></ion-icon>
 					</span>
-					<span class="navigation-text">Ajouter un ami</span>
+					<span class="navigation-text">Partager une liste</span>
 				</a>
 			</li>
 			<li class="list">
@@ -46,13 +45,17 @@
 					<span class="navigation-text">Messages</span>
 				</a>
 			</li>
+			<li class="list">
+				<%-- TODO : add url --%>
+				<a href="#">
+					<span class="navigation-icon">
+						<ion-icon name="log-out-outline"></ion-icon>
+					</span>
+					<span class="navigation-text">Déconnexion</span>
+				</a>
+			</li>
 		</ul>
 	</div>
-	
-	<%-- icon pour les messages --%>
-	<!-- <ion-icon name="mail-outline"></ion-icon> -->
-	<!-- <ion-icon name="mail-open-outline"></ion-icon> -->
-	<!-- <ion-icon name="mail-unread-outline"></ion-icon> -->	
 </div>
 
 <%-- change nav bar position depends index (pageIndex) --%>
