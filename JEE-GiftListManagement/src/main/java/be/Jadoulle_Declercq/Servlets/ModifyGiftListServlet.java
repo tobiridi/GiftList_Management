@@ -34,7 +34,7 @@ public class ModifyGiftListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			String idGiftList = request.getParameter("id");
+			String idGiftList = request.getParameter("idGiftList");
 			if (idGiftList != null) {
 				int idSearch = Integer.parseInt(idGiftList);
 				HttpSession session = request.getSession(false);

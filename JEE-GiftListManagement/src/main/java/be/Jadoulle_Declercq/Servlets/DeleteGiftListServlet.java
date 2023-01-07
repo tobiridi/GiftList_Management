@@ -26,7 +26,7 @@ public class DeleteGiftListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			String idDelete = request.getParameter("id");
+			String idDelete = request.getParameter("idGiftList");
 			if(idDelete != null) {
 				GiftList deleteGiftList = new GiftList();
 				deleteGiftList.setId(Integer.parseInt(idDelete));

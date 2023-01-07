@@ -2,6 +2,8 @@ package be.Jadoulle_Declercq.JavaBeans;
 
 import java.io.Serializable;
 
+import be.Jadoulle_Declercq.DAO.AbstractDAOFactory;
+
 public class Gift implements Serializable {
 	private static final long serialVersionUID = 2765142817316875747L;
 	
@@ -88,4 +90,8 @@ public class Gift implements Serializable {
 	}
 	
 	//methods
+	public boolean create() {
+		AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+		return adf.getGiftDao().create(this);
+	}
 }

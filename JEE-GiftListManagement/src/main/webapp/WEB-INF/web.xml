@@ -22,6 +22,7 @@
   	<servlet-name>ModifyGiftList</servlet-name>
   	<servlet-name>NotificationMessage</servlet-name>
   	<servlet-name>DetailsGiftList</servlet-name>
+  	<servlet-name>AddGift</servlet-name>
   </filter-mapping>
   
   <!-- session configuration -->
@@ -65,6 +66,17 @@
   <servlet>
   	<servlet-name>DetailsGiftList</servlet-name>
   	<servlet-class>be.Jadoulle_Declercq.Servlets.DetailsGiftListServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>AddGift</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.AddGiftServlet</servlet-class>
+  	<!-- configuration for upload file -->
+  	<multipart-config>
+  		<max-file-size>2097152</max-file-size>
+  		<max-request-size>3145728</max-request-size>
+  		<file-size-threshold>1048000</file-size-threshold>
+  	</multipart-config>
   </servlet>
   
   <!-- servlets mapping -->
@@ -122,6 +134,13 @@
   	<url-pattern>/DetailsGiftList</url-pattern>
   	<url-pattern>/detailsGiftList</url-pattern>
   	<url-pattern>/DetailsGiftListServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>AddGift</servlet-name>
+  	<url-pattern>/AddGift</url-pattern>
+  	<url-pattern>/addGift</url-pattern>
+  	<url-pattern>/AddGiftServlet</url-pattern>
   </servlet-mapping>
   
 </web-app>

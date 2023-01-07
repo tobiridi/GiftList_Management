@@ -67,22 +67,21 @@
 							<td>Aucun lien</td>
 						<% } %>
 						
-						<%-- TODO : not finished --%>
 						<% if(g.getPicture() != null) { %>
 							<td>
-								<img src="data:image/png;base64,<%= g.getPicture() %>" width="360" height="360">
+								<img src="data:image/png;base64,<%= g.getPicture() %>" width="90" height="90">
 							</td>
 						<% } else { %>
 							<td>Aucune image</td>
 						<% } %>
 						
 						<td>
-							<%-- TODO : add modify Gift --%>
+							<%-- TODO : add modify, delete Gift --%>
 							<% if(!isFriendGiftList) { %>
 								<a href="#"><input type="button" value="Modifier"/></a>
 								<a href="#"><input type="button" value="Supprimer"/></a>
 							<% } %>
-							<%-- TODO : add modify Gift --%>
+							<%-- TODO : add details Gift --%>
 							<a href="#"><input type="button" value="Détails"/></a>
 						</td>
 					</tr>
@@ -92,12 +91,11 @@
 	<% } else { %>
 		<p style="text-align: center;">Il n'y a aucun cadeaux.</p>
 	<% } %>
-	<!-- maybe change -->
+	
 	<% if(!isFriendGiftList) { %>
-		<form action="#" method="get">
-			<%-- TODO add add gift button --%>
-			<a href="#"><input type="button" value="Ajouter un cadeau" class="btnConfirm"/></a>
-		</form>
+		<div style="display: flex; justify-content:center; align-items: center; margin-top: 5px;">
+			<a href="AddGift?idGiftList=<%= listCustomer.getId() %>"><input type="submit" value="Ajouter un cadeau" class="btnConfirm"/></a>
+		</div>
 	<% } %>
 	
 	<script type="text/javascript">

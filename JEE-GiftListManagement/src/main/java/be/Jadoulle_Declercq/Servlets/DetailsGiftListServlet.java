@@ -29,9 +29,9 @@ public class DetailsGiftListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		Customer customerLog = (Customer) session.getAttribute("customerLog");
-		String idGiftList = request.getParameter("id");
+		String idGiftList = request.getParameter("idGiftList");
 		String idFriendGiftList = request.getParameter("idFriendGiftList");
 		if(idGiftList != null || idFriendGiftList != null) {
 			try {

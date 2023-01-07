@@ -37,10 +37,10 @@
 					<td><%= list.getDeadLine() != null ? list.getDeadLine().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) : "aucune date défini" %></td>
 					<td><%= list.isExpired() ? "expiré" : "actif" %></td>
 					<td>
-						<a href="ModifyGiftList?id=<%= list.getId() %>"><input type="button" value="Modifier"/></a>
-						<a href="DeleteGiftList?id=<%= list.getId() %>"><input type="button" value="Supprimer"/></a>
+						<a href="ModifyGiftList?idGiftList=<%= list.getId() %>"><input type="button" value="Modifier"/></a>
+						<a href="DeleteGiftList?idGiftList=<%= list.getId() %>"><input type="button" value="Supprimer"/></a>
 						<% if(!list.isExpired()) { %>
-							<a href="DetailsGiftList?id=<%= list.getId() %>"><input type="button" value="Détails"/></a>
+							<a href="DetailsGiftList?idGiftList=<%= list.getId() %>"><input type="button" value="Détails"/></a>
 						<% } %>
 					</td>
 				</tr>
