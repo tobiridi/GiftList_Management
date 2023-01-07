@@ -72,7 +72,7 @@
 					<% if(!list.isExpired()) { %>
 						<td>
 							<%--TODO : add url --%>
-							<a href="#"><input type="button" value="Détails"/></a>
+							<a href="DetailsGiftList?idFriendGiftList=<%= list.getId() %>"><input type="button" value="Détails"/></a>
 						</td>
 					<% } %>
 				</tr>
@@ -80,7 +80,7 @@
 		</tbody>
 		</table>
 	<% } else { %>
-		<p style="text-align: center">Il y a aucune liste.</p>
+		<p style="text-align: center">Il n'y a aucune liste.</p>
 	<% } %>
 </body>
 </html>

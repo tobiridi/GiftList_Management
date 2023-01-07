@@ -7,7 +7,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import be.Jadoulle_Declercq.JavaBeans.Customer;
 import be.Jadoulle_Declercq.JavaBeans.GiftList;
 
 /**
@@ -27,16 +29,40 @@ public class DetailsGiftListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		Customer customerLog = (Customer) session.getAttribute("customerLog");
 		String idGiftList = request.getParameter("id");
-		String friendGiftList = request.getParameter("friendGiftList");
-		if(idGiftList != null && friendGiftList == null) {
+		String idFriendGiftList = request.getParameter("idFriendGiftList");
+		if(idGiftList != null || idFriendGiftList != null) {
 			try {
-				int idList = Integer.parseInt(idGiftList);
-				GiftList detailGiftList = GiftList.get(idList);
-				if(detailGiftList != null) {
-					request.setAttribute("detailGiftList", detailGiftList);
-					RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/JSP/DetailsGiftList.jsp");
-					dispatcher.forward(request, response);
+				int idList = (idGiftList != null) ? Integer.parseInt(idGiftList) : Integer.parseInt(idFriendGiftList);
+				GiftList listCustomer = null;
+				//check if customerLog has this giftList, not consult a giftList of the another Customer
+				if(idFriendGiftList != null) {
+					//friends giftList
+					listCustomer = customerLog.getOtherCustomerList().stream().filter(gl -> gl.getId() == idList).findFirst().orElse(null);
+				}
+				else {
+					//owner giftList
+					listCustomer = customerLog.getGiftList().stream().filter(gl -> gl.getId() == idList).findFirst().orElse(null);
+				}
+				if(listCustomer != null) {
+					listCustomer = GiftList.get(idList);
+					
+					if(listCustomer != null) {
+						if(idFriendGiftList != null) {
+							request.setAttribute("isFriendGiftList", true);
+						}
+						request.setAttribute("listCustomer", listCustomer);
+						RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/JSP/DetailsGiftList.jsp");
+						dispatcher.forward(request, response);
+					}
+					else {
+						response.sendRedirect("MainPage");
+					}
+				}
+				else {
+					response.sendRedirect("MainPage");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
