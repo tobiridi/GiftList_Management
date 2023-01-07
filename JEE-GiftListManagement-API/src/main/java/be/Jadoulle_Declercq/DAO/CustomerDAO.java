@@ -144,7 +144,7 @@ public class CustomerDAO extends DAO<Customer> {
 					String lastname = (String) customerData[2];
 					String email = (String) customerData[3];
 					
-					Customer customer = new Customer(id, email, null, lastname, firstname);
+					Customer customer = new Customer(id, email, null, firstname, lastname);
 					allCustomers.add(customer);
 				}
 			}

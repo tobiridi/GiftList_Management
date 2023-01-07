@@ -40,8 +40,6 @@ public class GiftDAO extends DAO<Gift> {
 		this.response = this.webResource.path("gift").accept(MediaType.APPLICATION_JSON)
 				.post(ClientResponse.class, this.params);
 		
-		System.out.println("api response code  : " + this.response.getStatus());
-		
 		if(this.response.getStatus() == 201) {
 			//get header location
 			URI apiLocation = this.response.getLocation();

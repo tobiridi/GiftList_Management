@@ -3,6 +3,8 @@ package be.Jadoulle_Declercq.JavaBeans;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import be.Jadoulle_Declercq.DAO.AbstractDAOFactory;
+
 public class NotificationMessage implements Serializable {
 	private static final long serialVersionUID = 8947431798761959935L;
 	
@@ -70,5 +72,8 @@ public class NotificationMessage implements Serializable {
 	}
 	
 	//methods
-	
+	public boolean create() {
+		AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+		return adf.getNotificationMessageDao().create(this);
+	}
 }

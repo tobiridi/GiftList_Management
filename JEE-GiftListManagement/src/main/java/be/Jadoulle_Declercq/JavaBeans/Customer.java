@@ -1,6 +1,7 @@
 package be.Jadoulle_Declercq.JavaBeans;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import be.Jadoulle_Declercq.DAO.AbstractDAOFactory;
@@ -140,5 +141,28 @@ public class Customer implements Serializable {
 	
 	public boolean hasUnreadMessage() {
 		return this.messageBox.stream().filter(m -> !m.isRead()).count() > 0;
+	}
+	
+	public boolean shareGiftList(int idGiftList, Customer newfriend) {
+		//check if the list is the customer Log giftList
+		GiftList list = this.giftList.stream().filter(gl -> gl.getId() == idGiftList).findFirst().orElse(null);
+		if(list == null) {
+			return false;
+		}
+		else {
+			list.addCustomerShared(newfriend);
+			boolean isUpdate = list.update();
+			NotificationMessage newMessage = new NotificationMessage();
+			newMessage.setTitle("Invitation a rejoindre une liste");
+			String message = this.lastname + " " + this.firstname + 
+							 " vous a ajouter à la liste " + list.getType();
+			newMessage.setMessage(message);
+			newMessage.setNotificationDate(LocalDate.now());
+			newMessage.setRead(false);
+			newMessage.setRecipient(newfriend);
+			newMessage.create();
+			
+			return isUpdate;
+		}
 	}
 }

@@ -163,6 +163,19 @@ public class GiftListDAO extends DAO<GiftList> {
 			int res = cstmt.executeUpdate();
 			cstmt.close();
 			
+			//update only one shared GiftList
+			if(!obj.getCustomerShared().isEmpty()) {
+				CallableStatement cstmt2 = this.connection.prepareCall("{call insert_Friend_GiftList(?,?)}");
+				
+				//IN parameters
+				cstmt2.setInt(1, obj.getCustomerShared().get(0).getId());
+				cstmt2.setInt(2, obj.getId());
+				
+				//execute
+				res = cstmt2.executeUpdate();
+				cstmt2.close();
+			}
+			
 			return res > 0;
 			
 		} catch (SQLException e) {

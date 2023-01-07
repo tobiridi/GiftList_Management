@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import be.Jadoulle_Declercq.DAO.AbstractDAOFactory;
 import be.Jadoulle_Declercq.Serializers.JsonLocalDateDeserializer;
 import be.Jadoulle_Declercq.Serializers.JsonLocalDateSerializer;
 
@@ -78,5 +79,8 @@ public class NotificationMessage implements Serializable {
 	}
 	
 	//methods
-	
+	public boolean create() {
+		AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+		return adf.getNotificationMessageDao().create(this);
+	}
 }

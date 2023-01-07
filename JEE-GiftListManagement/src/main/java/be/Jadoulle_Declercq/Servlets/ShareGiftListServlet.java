@@ -48,19 +48,23 @@ public class ShareGiftListServlet extends HttpServlet {
 			Customer customerLog = (Customer) session.getAttribute("customerLog");
 			int idGiftList = Integer.parseInt(idList);
 			int idFriend = Integer.parseInt(idCustomer);
-			//TODO : not implemented
-//			if(customerLog.shareGiftList(idGiftList, idFriend)) {
-//				request.setAttribute("successMessage", "La liste a été partager avec succès !");
-//				doGet(request, response);
-//			}
-//			else {
-//				HashMap<String, String> errorsMessage = new HashMap<>();
-//				errorsMessage.put("shareListError", "Une erreur est survenue lors du partage de la liste.");
-//				request.setAttribute("errorsMessage", errorsMessage);
-//				doGet(request, response);
-//			}
+			Customer newFriend = new Customer();
+			newFriend.setId(idFriend);
+			
+			if(customerLog.shareGiftList(idGiftList, newFriend)) {
+				request.setAttribute("successMessage", "La liste a été partager avec succès !");
+				doGet(request, response);
+			}
+			else {
+				HashMap<String, String> errorsMessage = new HashMap<>();
+				errorsMessage.put("shareListError", "Une erreur est survenue lors du partage de la liste.");
+				request.setAttribute("errorsMessage", errorsMessage);
+				doGet(request, response);
+			}
 		}
-		doGet(request, response);
+		else {
+			response.sendRedirect("MainPage");
+		}
 	}
 
 }

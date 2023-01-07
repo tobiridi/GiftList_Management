@@ -1,6 +1,11 @@
 package be.Jadoulle_Declercq.DAO;
 
+import java.net.URI;
 import java.util.ArrayList;
+
+import javax.ws.rs.core.MediaType;
+
+import com.sun.jersey.api.client.ClientResponse;
 
 import be.Jadoulle_Declercq.JavaBeans.NotificationMessage;
 
@@ -24,7 +29,24 @@ public class NotificationMessageDAO extends DAO<NotificationMessage> {
 
 	@Override
 	public boolean create(NotificationMessage obj) {
-		// TODO Auto-generated method stub
+		this.params.add("title", obj.getTitle());
+		this.params.add("message", obj.getMessage());
+		this.params.add("notificationDate", String.valueOf(obj.getNotificationDate()));
+		this.params.add("isRead", String.valueOf(obj.isRead()));
+		this.params.add("customerId", String.valueOf(obj.getRecipient().getId()));
+		
+		this.response = this.webResource.path("notificationMessage").accept(MediaType.APPLICATION_JSON)
+				.post(ClientResponse.class, this.params);
+		
+		if(this.response.getStatus() == 201) {
+			//get header location
+			URI apiLocation = this.response.getLocation();
+			if(apiLocation != null) {
+				System.out.println("apiResponse : " + apiLocation.getPath());
+			}
+			return true;
+		}
+		
 		return false;
 	}
 

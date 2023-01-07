@@ -78,8 +78,8 @@ public class GiftListDAO extends DAO<GiftList> {
 
 	@Override
 	public boolean update(GiftList obj) {
-		JSONObject jsonObject = new JSONObject(obj);
 		String id = String.valueOf(obj.getId());
+		JSONObject jsonObject = new JSONObject(obj);
 		
 		this.response = this.webResource.path("giftList").path(id)
 				.type(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
