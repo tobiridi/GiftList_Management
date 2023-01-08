@@ -2,11 +2,183 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" version="4.0">
   <display-name>JEE-GiftListManagement</display-name>
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>Index.html</welcome-file>
+    <welcome-file>Index.jsp</welcome-file>
   </welcome-file-list>
+  <!-- context parameters -->
+  
+  <!-- filters declaration -->
+  <filter>
+  	<filter-name>AuthenticationFilter</filter-name>
+  	<filter-class>be.Jadoulle_Declercq.Filters.AuthenticationFilter</filter-class>
+  </filter>
+  
+  <!-- filters mapping -->
+  <filter-mapping>
+  	<filter-name>AuthenticationFilter</filter-name>
+  	<servlet-name>MainPage</servlet-name>
+  	<servlet-name>GiftList</servlet-name>
+  	<servlet-name>DeleteGiftList</servlet-name>
+  	<servlet-name>ModifyGiftList</servlet-name>
+  	<servlet-name>NotificationMessage</servlet-name>
+  	<servlet-name>DetailsGiftList</servlet-name>
+  	<servlet-name>AddGift</servlet-name>
+  	<servlet-name>ShareGiftList</servlet-name>
+  	<servlet-name>DeleteNotificationMessage</servlet-name>
+  </filter-mapping>
+  
+  <!-- session configuration -->
+  
+  <!-- servlets declaration -->
+  <servlet>
+  	<servlet-name>Index</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.IndexServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>Inscription</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.InscriptionServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>MainPage</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.MainPageServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>GiftList</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.GiftListServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>DeleteGiftList</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.DeleteGiftListServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>ModifyGiftList</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.ModifyGiftListServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>NotificationMessage</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.NotificationMessageServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>DetailsGiftList</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.DetailsGiftListServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>AddGift</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.AddGiftServlet</servlet-class>
+  	<!-- configuration for upload file -->
+  	<multipart-config>
+  		<max-file-size>2097152</max-file-size>
+  		<max-request-size>3145728</max-request-size>
+  		<file-size-threshold>1048000</file-size-threshold>
+  	</multipart-config>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>ShareGiftList</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.ShareGiftListServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>DeleteNotificationMessage</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.DeleteNotificationMessageServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>LogOut</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.LogOutServlet</servlet-class>
+  </servlet>
+  
+  <!-- servlets mapping -->
+  <servlet-mapping>
+  	<servlet-name>Index</servlet-name>
+  	<url-pattern>/Index</url-pattern>
+  	<url-pattern>/index</url-pattern>
+  	<url-pattern>/IndexServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>Inscription</servlet-name>
+  	<url-pattern>/Inscription</url-pattern>
+  	<url-pattern>/inscription</url-pattern>
+  	<url-pattern>/InscriptionServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>MainPage</servlet-name>
+  	<url-pattern>/MainPage</url-pattern>
+  	<url-pattern>/mainPage</url-pattern>
+  	<url-pattern>/MainPageServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>GiftList</servlet-name>
+  	<url-pattern>/GiftList</url-pattern>
+  	<url-pattern>/giftList</url-pattern>
+  	<url-pattern>/GiftListServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>DeleteGiftList</servlet-name>
+  	<url-pattern>/DeleteGiftList</url-pattern>
+  	<url-pattern>/deleteGiftList</url-pattern>
+  	<url-pattern>/DeleteGiftListServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>ModifyGiftList</servlet-name>
+  	<url-pattern>/ModifyGiftList</url-pattern>
+  	<url-pattern>/modifyGiftList</url-pattern>
+  	<url-pattern>/ModifyGiftListServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>NotificationMessage</servlet-name>
+  	<url-pattern>/NotificationMessage</url-pattern>
+  	<url-pattern>/notificationMessage</url-pattern>
+  	<url-pattern>/NotificationMessageServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>DetailsGiftList</servlet-name>
+  	<url-pattern>/DetailsGiftList</url-pattern>
+  	<url-pattern>/detailsGiftList</url-pattern>
+  	<url-pattern>/DetailsGiftListServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>AddGift</servlet-name>
+  	<url-pattern>/AddGift</url-pattern>
+  	<url-pattern>/addGift</url-pattern>
+  	<url-pattern>/AddGiftServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>ShareGiftList</servlet-name>
+  	<url-pattern>/ShareGiftList</url-pattern>
+  	<url-pattern>/shareGiftList</url-pattern>
+  	<url-pattern>/ShareGiftListServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>DeleteNotificationMessage</servlet-name>
+  	<url-pattern>/DeleteNotificationMessage</url-pattern>
+  	<url-pattern>/deleteNotificationMessage</url-pattern>
+  	<url-pattern>/DeleteNotificationMessageServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>LogOut</servlet-name>
+  	<url-pattern>/LogOut</url-pattern>
+  	<url-pattern>/logOut</url-pattern>
+  	<url-pattern>/LogOutServlet</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

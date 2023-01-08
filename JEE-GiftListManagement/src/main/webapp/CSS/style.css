@@ -1,0 +1,166 @@
+/* Main/Global CSS */
+body {
+	margin: 5;
+	padding: 5;
+	box-sizing: border-box;
+	background-color: #eaf0f0;
+}
+h1 {
+	text-align: center;
+	text-decoration: underline;
+}
+.errorMessage {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+.errorMessage p {
+	color: red;
+	font-weight: 500;
+	margin: 5px;
+	padding: 5px;
+}
+form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+form input {
+	margin: 5px;
+	padding: 5px;
+}
+.successMessage {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+.successMessage p {
+	color: #33b54f;
+	font-weight: 500;
+	margin: 5px;
+	padding: 5px;
+}
+
+/* button */
+.btnConfirm {
+	border: none;
+	outline: none;
+	background-color: #428bca;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: 0.5s;
+	padding: 10px;
+}
+.btnConfirm:hover {
+	font-size: 1.1em;
+}
+.btnCancel {
+	border: none;
+	outline: none;
+	background-color: #99aab5;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: 0.5s;
+	padding: 10px;
+}
+.btnCancel:hover {
+	font-size: 1.1em;
+}
+
+/* table */
+table {
+	font-size: 1.1em;
+	margin-left: auto;
+	margin-right: auto;
+}
+table, th, td {
+	border: 1px solid #000;
+}
+td {
+	text-align: center;
+	padding-top: 5px;
+	padding-left: 10px;
+	padding-bottom: 5px;
+	padding-right: 10px;
+}
+td input[type="button"]  {
+	border: none;
+	outline: none;
+	background-color: #54b4d3;
+	border-radius: 5px;
+	cursor: pointer;
+	padding: 10px;
+	color: #fff;
+}
+
+/* navigation bar */
+.navigation-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 20vh;
+}
+.navigation {
+	position: relative;
+	width: 875px;
+	height: 70px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 10px;
+	background-color: #dfdfdf;
+}
+.navigation ul {
+	display: flex;
+	width: 875px;
+}
+.navigation ul li {
+	list-style: none;
+	/* navigation.width / nbr li */
+	width: 175px;
+	height: 70px;
+	z-index: 2;
+}
+.navigation ul li a {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 100%;
+	text-align: center;
+	font-weight: 500;
+	text-decoration: none;
+}
+.navigation ul li a .navigation-icon {
+	position: relative;
+	display: block;
+	line-height: 70px;
+	font-size: 1.5em;
+	transition: 0.5s;
+	color: #223227;
+}
+.navigation ul li.active a .navigation-icon {
+	color: #2196f3;
+	transform: translateY(-10px);
+}
+.navigation ul li a .navigation-text {
+	position: absolute;
+	background-color: #2196f3;
+	color: #ffffff;
+	padding: 2px 7px;
+	border-radius: 12px;
+	font-weight: 400;
+	font-size: 1em;
+	letter-spacing: 0.1em;
+	transition: 0.5s;
+	opacity: 0;
+	transform: translateY(25px);
+}
+.navigation ul li.active a .navigation-text {
+	opacity: 1;
+	transform: translateY(15px);
+}

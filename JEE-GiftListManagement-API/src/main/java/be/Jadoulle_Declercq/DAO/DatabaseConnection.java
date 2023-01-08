@@ -11,8 +11,14 @@ public class DatabaseConnection {
 	private static final String port = "1522";
 	private static final String serviceName = "XEPDB1";
 	private static final String connectionString = "jdbc:oracle:thin:@//" + ip + ":" + port + "/" + serviceName;
-	private static final String username = "student03_01";
-	private static final String password = "564271839";
+	// TODO : change database
+	// production database
+	//private static final String username = "student03_01";
+	//private static final String password = "564271839";
+	
+	// test database
+	private static final String username = "student03_09";
+	private static final String password = "Napoleon1er";
 	private static Connection instance = null;
 	
 	private DatabaseConnection() {
