@@ -1,5 +1,5 @@
 <%@ page import="java.util.HashMap"%>
-<%@ page import="java.util.Map" %>
+<%@ page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -52,6 +52,7 @@
 		<p><label for="giftPicture">Image (optionel)</label> : <input type="file" id="giftPicture" name="giftPicture" accept="image/*"/></p>
 		<input type="submit" value="Confirmer" class="btnConfirm"/>
 	</form>
+	
 	<div class="errorMessage">
 		<%
 		if (errorsMessage != null) {
@@ -63,11 +64,12 @@
 		}
 		%>
 	</div>
+	
 	<script type="text/javascript">
 		let giftPicture = document.getElementById('giftPicture');
 		giftPicture.onchange = function () {
 			if(this.files[0].size > 2097152){
-				alert("Fichier trop gros !");
+				alert("Fichier trop gros !\nLe fichier ne doit pas dépasser 2MB.");
 				this.value = "";
 			};
 		};

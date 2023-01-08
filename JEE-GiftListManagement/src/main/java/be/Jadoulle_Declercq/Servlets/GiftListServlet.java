@@ -57,6 +57,7 @@ public class GiftListServlet extends HttpServlet {
 					Customer customerLog = (Customer) session.getAttribute("customerLog");
 					GiftList newGiftList = new GiftList(0, giftListType, true, giftListDeadLine, customerLog);
 					if(newGiftList.create()) {
+						customerLog.addGiftList(newGiftList);
 						request.setAttribute("successMessage", "Liste créer avec succès !");
 						doGet(request, response);
 					}

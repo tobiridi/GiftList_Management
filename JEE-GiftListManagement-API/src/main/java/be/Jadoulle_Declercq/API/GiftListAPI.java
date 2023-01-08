@@ -80,6 +80,7 @@ public class GiftListAPI {
 		if(id > 0) {
 			GiftList deleteList = new GiftList();
 			deleteList.setId(id);
+			
 			if(deleteList.delete()) {
 				return Response.status(Status.NO_CONTENT).build();
 			}

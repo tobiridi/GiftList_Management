@@ -1,4 +1,4 @@
-<%@page import="java.util.HashMap"%>
+<%@ page import="java.util.HashMap"%>
 <%@ page import="java.util.Map" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -12,8 +12,8 @@
 <body>
 	<%
 		HashMap<String, String> errorsMessage = (HashMap<String, String>) request.getAttribute("errorsMessage");
-		String previousEmail = (String)request.getAttribute("previousEmail");
-		String previousPassword = (String)request.getAttribute("previousPassword");
+		String previousEmail = (String) request.getAttribute("previousEmail");
+		String previousPassword = (String) request.getAttribute("previousPassword");
 	%>
 
 	<h1>Connexion au site Gift List Management</h1>

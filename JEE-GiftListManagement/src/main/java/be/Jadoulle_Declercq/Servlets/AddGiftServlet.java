@@ -78,7 +78,7 @@ public class AddGiftServlet extends HttpServlet {
 			int idList = Integer.parseInt((String) session.getAttribute("idGiftList"));
 			list.setId(idList);
 			
-			Gift newGift = new Gift(0, prio, giftName, averagePrice, giftDescription, giftLink, picture, list);
+			Gift newGift = new Gift(0, prio, giftName, averagePrice, giftDescription, giftLink, picture, list, null);
 			if(newGift.create()) {
 				request.setAttribute("successMessage", "Cadeau créer avec succès !");
 				doGet(request, response);

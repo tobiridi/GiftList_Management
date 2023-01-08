@@ -41,9 +41,8 @@ public class NotificationMessageAPI {
 							.header("Location", "/JEE-GiftListManagement-API/api/notificationMessage/" + newNotification.getId())
 							.build();
 				}
-				else {
-					return Response.status(Status.SERVICE_UNAVAILABLE).build();
-				}
+				
+				return Response.status(Status.SERVICE_UNAVAILABLE).build();
 			}
 		}
 		
@@ -56,6 +55,7 @@ public class NotificationMessageAPI {
 		if(id > 0) {
 			NotificationMessage deleteMessage = new NotificationMessage();
 			deleteMessage.setId(id);
+			
 			if(deleteMessage.delete()) {
 				return Response.status(Status.NO_CONTENT).build();
 			}

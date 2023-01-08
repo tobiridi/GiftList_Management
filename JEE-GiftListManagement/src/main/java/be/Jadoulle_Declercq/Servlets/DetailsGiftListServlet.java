@@ -37,7 +37,7 @@ public class DetailsGiftListServlet extends HttpServlet {
 			try {
 				int idList = (idGiftList != null) ? Integer.parseInt(idGiftList) : Integer.parseInt(idFriendGiftList);
 				GiftList listCustomer = null;
-				//check if customerLog has this giftList, not consult a giftList of the another Customer
+				//check if customerLog has this giftList, not consult a giftList from another Customer
 				if(idFriendGiftList != null) {
 					//friends giftList
 					listCustomer = customerLog.getOtherCustomerList().stream().filter(gl -> gl.getId() == idList).findFirst().orElse(null);

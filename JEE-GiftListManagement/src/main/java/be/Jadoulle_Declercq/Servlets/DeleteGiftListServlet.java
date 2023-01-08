@@ -28,8 +28,9 @@ public class DeleteGiftListServlet extends HttpServlet {
 		try {
 			String idDelete = request.getParameter("idGiftList");
 			if(idDelete != null) {
+				int id = Integer.parseInt(idDelete);
 				GiftList deleteGiftList = new GiftList();
-				deleteGiftList.setId(Integer.parseInt(idDelete));
+				deleteGiftList.setId(id);
 				deleteGiftList.delete(); 
 			}
 		} catch (Exception e) {

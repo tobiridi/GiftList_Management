@@ -73,8 +73,15 @@ public class Gift implements Serializable {
 		this.giftList = giftList;
 	}
 	
+	public GiftOffered getOffered() {
+		return offered;
+	}
+	public void setOffered(GiftOffered offered) {
+		this.offered = offered;
+	}
+	
 	//CONSTRUCTOR
-	public Gift(int id, int priority, String name, double averagePrice, String description, String link, String picture, GiftList giftList) {
+	public Gift(int id, int priority, String name, double averagePrice, String description, String link, String picture, GiftList giftList, GiftOffered giftOffered) {
 		this.id = id;
 		this.priority = priority;
 		this.name = name;
@@ -83,6 +90,7 @@ public class Gift implements Serializable {
 		this.link = link;
 		this.picture = picture;
 		this.giftList = giftList;
+		this.offered = giftOffered;
 	}
 	
 	public Gift() {
@@ -93,5 +101,13 @@ public class Gift implements Serializable {
 	public boolean create() {
 		AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 		return adf.getGiftDao().create(this);
+	}
+	
+	public boolean hasLink() {
+		return this.link != null;
+	}
+	
+	public boolean hasPicture() {
+		return this.picture != null;
 	}
 }

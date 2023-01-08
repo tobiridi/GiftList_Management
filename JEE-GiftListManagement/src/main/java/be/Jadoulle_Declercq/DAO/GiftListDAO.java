@@ -10,7 +10,6 @@ import org.json.JSONObject;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.sun.jersey.api.client.ClientResponse;
 
-import be.Jadoulle_Declercq.JavaBeans.Customer;
 import be.Jadoulle_Declercq.JavaBeans.GiftList;
 
 public class GiftListDAO extends DAO<GiftList> {
@@ -48,7 +47,6 @@ public class GiftListDAO extends DAO<GiftList> {
 
 	@Override
 	public ArrayList<GiftList> findAll() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -97,5 +95,4 @@ public class GiftListDAO extends DAO<GiftList> {
 
 		return this.response.getStatus() == 204;
 	}
-
 }

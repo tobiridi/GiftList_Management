@@ -28,8 +28,7 @@ public class AuthenticationFilter implements Filter {
 			throws IOException, ServletException {
 		
 		try {
-			//TODO : remove, just test
-			System.out.println(this.filterConfig.getFilterName());
+			//System.out.println(this.filterConfig.getFilterName());
 			
 			HttpSession session = ((HttpServletRequest) request).getSession(false);
 			if(session != null) {

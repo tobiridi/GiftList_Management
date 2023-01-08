@@ -1,7 +1,7 @@
 <%@ page import="java.time.format.DateTimeFormatter"%>
 <%@ page import="java.util.ArrayList"%>
-<%@ page import="be.Jadoulle_Declercq.JavaBeans.GiftList" %>
-<%@ page import="be.Jadoulle_Declercq.JavaBeans.NotificationMessage" %>
+<%@ page import="be.Jadoulle_Declercq.JavaBeans.GiftList"%>
+<%@ page import="be.Jadoulle_Declercq.JavaBeans.NotificationMessage"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,6 +13,7 @@
 </head>
 <body>
 	<jsp:useBean id="customerLog" class="be.Jadoulle_Declercq.JavaBeans.Customer" scope="session"></jsp:useBean>
+	
 	<jsp:include page="NavBar.jsp">
 		<jsp:param value="1" name="pageIndex"/>
 	</jsp:include>
@@ -71,7 +72,6 @@
 					<td><%= list.isExpired() ? "expiré" : "actif" %></td>
 					<% if(!list.isExpired()) { %>
 						<td>
-							<%--TODO : add url --%>
 							<a href="DetailsGiftList?idFriendGiftList=<%= list.getId() %>"><input type="button" value="Détails"/></a>
 						</td>
 					<% } %>
@@ -80,7 +80,7 @@
 		</tbody>
 		</table>
 	<% } else { %>
-		<p style="text-align: center">Il n'y a aucune liste.</p>
+		<p style="text-align: center;">Il n'y a aucune liste.</p>
 	<% } %>
 </body>
 </html>

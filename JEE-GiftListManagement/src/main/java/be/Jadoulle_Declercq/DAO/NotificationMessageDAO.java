@@ -17,13 +17,11 @@ public class NotificationMessageDAO extends DAO<NotificationMessage> {
 	
 	@Override
 	public NotificationMessage find(int id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public ArrayList<NotificationMessage> findAll() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -52,7 +50,6 @@ public class NotificationMessageDAO extends DAO<NotificationMessage> {
 
 	@Override
 	public boolean update(NotificationMessage obj) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -66,5 +63,4 @@ public class NotificationMessageDAO extends DAO<NotificationMessage> {
 		
 		return this.response.getStatus() == 204;
 	}
-
 }

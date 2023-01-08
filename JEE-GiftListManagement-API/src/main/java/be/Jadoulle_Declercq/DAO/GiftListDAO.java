@@ -87,7 +87,8 @@ public class GiftListDAO extends DAO<GiftList> {
 						GiftList listOwner = new GiftList();
 						listOwner.setId(id);
 						
-						Gift gift = new Gift(idGift, priority, name, averagePrice, description, link, picture, listOwner);
+						//TODO : add giftOffered
+						Gift gift = new Gift(idGift, priority, name, averagePrice, description, link, picture, listOwner, null);
 						giftList.addGift(gift);
 					}
 				}
@@ -104,7 +105,6 @@ public class GiftListDAO extends DAO<GiftList> {
 
 	@Override
 	public ArrayList<GiftList> findAll() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -205,5 +205,4 @@ public class GiftListDAO extends DAO<GiftList> {
 		
 		return false;
 	}
-
 }

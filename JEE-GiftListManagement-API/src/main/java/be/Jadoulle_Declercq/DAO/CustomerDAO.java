@@ -192,13 +192,11 @@ public class CustomerDAO extends DAO<Customer> {
 
 	@Override
 	public boolean update(Customer obj) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean delete(Customer obj) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	

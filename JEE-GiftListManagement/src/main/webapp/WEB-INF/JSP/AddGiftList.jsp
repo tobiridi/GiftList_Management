@@ -1,5 +1,5 @@
 <%@ page import="java.util.HashMap"%>
-<%@ page import="java.util.Map" %>
+<%@ page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -44,6 +44,7 @@
 		<input type="submit" value="Confirmer" class="btnConfirm"/>
 		<a href="MainPage"><input type="button" value="Annuler" class="btnCancel"/></a>
 	</form>
+	
 	<div class="errorMessage">
 		<%
 		if (errorsMessage != null) {

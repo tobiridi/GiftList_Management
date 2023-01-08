@@ -16,7 +16,9 @@
 			isFriendGiftList = (boolean) request.getAttribute("isFriendGiftList");
 		}
 	%>
+	
 	<jsp:useBean id="listCustomer" class="be.Jadoulle_Declercq.JavaBeans.GiftList" scope="request"></jsp:useBean>
+	
 	<jsp:include page="NavBar.jsp">
 		<jsp:param value="3" name="pageIndex"/>
 	</jsp:include>
@@ -61,13 +63,13 @@
 						<td><%= g.getName() %></td>
 						<td><%= g.getDescription() %></td>
 						<td><%= g.getAveragePrice() %></td>
-						<% if(g.getLink() != null) { %>
+						<% if(g.hasLink()) { %>
 							<td><input type="button" id="giftLink" name="giftLink" value="Copier le lien" onclick="copyLink('<%= g.getLink() %>')"></td>
 						<% } else { %>
 							<td>Aucun lien</td>
 						<% } %>
 						
-						<% if(g.getPicture() != null) { %>
+						<% if(g.hasPicture()) { %>
 							<td>
 								<img src="data:image/png;base64,<%= g.getPicture() %>" width="90" height="90">
 							</td>

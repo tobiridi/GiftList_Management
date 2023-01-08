@@ -17,13 +17,11 @@ public class GiftDAO extends DAO<Gift> {
 	
 	@Override
 	public Gift find(int id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public ArrayList<Gift> findAll() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -54,14 +52,11 @@ public class GiftDAO extends DAO<Gift> {
 
 	@Override
 	public boolean update(Gift obj) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean delete(Gift obj) {
-		// TODO Auto-generated method stub
 		return false;
 	}
-
 }

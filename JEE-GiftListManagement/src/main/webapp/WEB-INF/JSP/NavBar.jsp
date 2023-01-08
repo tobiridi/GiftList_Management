@@ -1,6 +1,5 @@
 <%
 	int pageIndex = Integer.valueOf((String) request.getParameter("pageIndex"));
-	boolean hasUnreadMessage = request.getParameter("hasUnreadMessage") != null ? true : false;
 %>
 <jsp:useBean id="customerLog" class="be.Jadoulle_Declercq.JavaBeans.Customer" scope="session"></jsp:useBean>
 

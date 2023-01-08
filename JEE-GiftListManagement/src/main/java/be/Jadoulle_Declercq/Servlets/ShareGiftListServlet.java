@@ -45,22 +45,30 @@ public class ShareGiftListServlet extends HttpServlet {
 		String idCustomer = request.getParameter("customer");
 		
 		if(idList != null && idCustomer != null) {
-			Customer customerLog = (Customer) session.getAttribute("customerLog");
-			int idGiftList = Integer.parseInt(idList);
-			int idFriend = Integer.parseInt(idCustomer);
-			Customer newFriend = new Customer();
-			newFriend.setId(idFriend);
+			try {
+				int idGiftList = Integer.parseInt(idList);
+				int idFriend = Integer.parseInt(idCustomer);
+				
+				Customer customerLog = (Customer) session.getAttribute("customerLog");
+				Customer newFriend = new Customer();
+				newFriend.setId(idFriend);
+				
+				if(customerLog.shareGiftList(idGiftList, newFriend)) {
+					request.setAttribute("successMessage", "La liste a été partager avec succès !");
+					doGet(request, response);
+				}
+				else {
+					HashMap<String, String> errorsMessage = new HashMap<>();
+					errorsMessage.put("shareListError", "Une erreur est survenue lors du partage de la liste.");
+					request.setAttribute("errorsMessage", errorsMessage);
+					doGet(request, response);
+				}
+				
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+				response.sendRedirect("MainPage");
+			}
 			
-			if(customerLog.shareGiftList(idGiftList, newFriend)) {
-				request.setAttribute("successMessage", "La liste a été partager avec succès !");
-				doGet(request, response);
-			}
-			else {
-				HashMap<String, String> errorsMessage = new HashMap<>();
-				errorsMessage.put("shareListError", "Une erreur est survenue lors du partage de la liste.");
-				request.setAttribute("errorsMessage", errorsMessage);
-				doGet(request, response);
-			}
 		}
 		else {
 			response.sendRedirect("MainPage");
