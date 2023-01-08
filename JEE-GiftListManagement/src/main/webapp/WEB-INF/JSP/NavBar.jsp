@@ -46,8 +46,7 @@
 				</a>
 			</li>
 			<li class="list">
-				<%-- TODO : add url --%>
-				<a href="#">
+				<a href="LogOut">
 					<span class="navigation-icon">
 						<ion-icon name="log-out-outline"></ion-icon>
 					</span>
