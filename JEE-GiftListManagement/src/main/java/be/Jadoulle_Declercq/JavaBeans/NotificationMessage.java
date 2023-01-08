@@ -2,6 +2,7 @@ package be.Jadoulle_Declercq.JavaBeans;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 
 import be.Jadoulle_Declercq.DAO.AbstractDAOFactory;
 
@@ -75,5 +76,27 @@ public class NotificationMessage implements Serializable {
 	public boolean create() {
 		AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 		return adf.getNotificationMessageDao().create(this);
+	}
+	
+	public boolean delete() {
+		AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+		return adf.getNotificationMessageDao().delete(this);
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, isRead, message, notificationDate, recipient, title);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (this.getClass() != obj.getClass())
+			return false;
+		NotificationMessage other = (NotificationMessage) obj;
+		return this.id == other.id;
 	}
 }

@@ -26,7 +26,7 @@
 			<tr>
 				<th>Type</th>
 				<th>Date limite</th>
-				<th>Active</th>
+				<th>Status</th>
 				<th>Option</th>
 			</tr>
 		</thead>
@@ -59,7 +59,7 @@
 			<tr>
 				<th>Type</th>
 				<th>Date limite</th>
-				<th>Active</th>
+				<th>Status</th>
 				<th>Option</th>
 			</tr>
 		</thead>

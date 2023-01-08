@@ -68,7 +68,22 @@ public class NotificationMessageDAO extends DAO<NotificationMessage> {
 
 	@Override
 	public boolean delete(NotificationMessage obj) {
-		// TODO Auto-generated method stub
+		try {
+			CallableStatement cstmt = this.connection.prepareCall("{call delete_NotificationMessage(?)}");
+			
+			//IN parameters
+			cstmt.setInt(1, obj.getId());
+			
+			//execute
+			int res = cstmt.executeUpdate();
+			cstmt.close();
+			
+			return res > 0;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		return false;
 	}
 

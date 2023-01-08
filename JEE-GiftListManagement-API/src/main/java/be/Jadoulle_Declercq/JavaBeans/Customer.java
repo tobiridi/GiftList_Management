@@ -1,7 +1,9 @@
 package be.Jadoulle_Declercq.JavaBeans;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import be.Jadoulle_Declercq.DAO.AbstractDAOFactory;
 import be.Jadoulle_Declercq.DAO.CustomerDAO;
@@ -134,11 +136,57 @@ public class Customer implements Serializable {
 		return this.messageBox.add(notif);
 	}
 	
+	public boolean removeNotificationMessage(NotificationMessage notif) {
+		this.messageBox.remove(notif);
+		return notif.delete();
+	}
+	
 	public boolean addGiftOffered(GiftOffered giftOffered) {
 		return this.giftOffereds.add(giftOffered);
 	}
 	
 	public boolean hasUnreadMessage() {
 		return this.messageBox.stream().filter(m -> !m.isRead()).count() > 0;
+	}
+	
+	public boolean shareGiftList(int idGiftList, Customer newfriend) {
+		//check if the list is the customer Log giftList
+		GiftList list = this.giftList.stream().filter(gl -> gl.getId() == idGiftList).findFirst().orElse(null);
+		if(list == null) {
+			return false;
+		}
+		else {
+			list.addCustomerShared(newfriend);
+			boolean isUpdate = list.update();
+			NotificationMessage newMessage = new NotificationMessage();
+			newMessage.setTitle("Invitation a rejoindre une liste");
+			String message = this.lastname + " " + this.firstname + 
+							 " vous a ajouter à la liste " + list.getType();
+			newMessage.setMessage(message);
+			newMessage.setNotificationDate(LocalDate.now());
+			newMessage.setRead(false);
+			newMessage.setRecipient(newfriend);
+			newMessage.create();
+			
+			return isUpdate;
+		}
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(email, firstname, giftList, giftOffereds,
+				id, lastname, messageBox, otherCustomerList, password);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (this.getClass() != obj.getClass())
+			return false;
+		Customer other = (Customer) obj;
+		return this.id == other.id; 
 	}
 }

@@ -58,8 +58,13 @@ public class NotificationMessageDAO extends DAO<NotificationMessage> {
 
 	@Override
 	public boolean delete(NotificationMessage obj) {
-		// TODO Auto-generated method stub
-		return false;
+		String idString = String.valueOf(obj.getId());
+		
+		this.response = this.webResource.path("notificationMessage").path(idString)
+				.accept(MediaType.APPLICATION_JSON)
+				.delete(ClientResponse.class, this.params);
+		
+		return this.response.getStatus() == 204;
 	}
 
 }

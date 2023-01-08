@@ -15,7 +15,7 @@
 		<jsp:param value="4" name="pageIndex"/>
 	</jsp:include>
 	
-	<h1>Listes des messages</h1>
+	<h1>Liste des messages</h1>
 	<hr>
 	<% if(!customerLog.getMessageBox().isEmpty()) { %>
 		<table>
@@ -33,8 +33,7 @@
 					<td><%= message.getTitle() %></td>
 					<td><textarea rows="5" cols="20" readonly="readonly" style="border: none"><%= message.getMessage() %></textarea></td>
 					<td><%= message.getNotificationDate() %></td>
-					<%--TODO : add url --%>
-					<td><a href="#"><input type="button" value="Supprimer" /></a></td>
+					<td><a href="DeleteNotificationMessage?idNotification=<%= message.getId() %>"><input type="button" value="Supprimer" /></a></td>
 				</tr>
 				<% } %>
 			</tbody>

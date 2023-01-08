@@ -77,13 +77,16 @@ public class GiftListAPI {
 	@DELETE
 	@Path("{id}")
 	public Response deleteGiftList(@PathParam("id") int id) {
-		GiftList deleteList = new GiftList();
-		deleteList.setId(id);
-		if(deleteList.delete()) {
-			return Response.status(Status.NO_CONTENT).build();
+		if(id > 0) {
+			GiftList deleteList = new GiftList();
+			deleteList.setId(id);
+			if(deleteList.delete()) {
+				return Response.status(Status.NO_CONTENT).build();
+			}
+			return Response.status(Status.SERVICE_UNAVAILABLE).build();
 		}
 		
-		return Response.status(Status.SERVICE_UNAVAILABLE).build();
+		return Response.status(Status.BAD_REQUEST).build();
 	}
 	
 	@PUT

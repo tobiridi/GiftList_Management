@@ -24,6 +24,7 @@
   	<servlet-name>DetailsGiftList</servlet-name>
   	<servlet-name>AddGift</servlet-name>
   	<servlet-name>ShareGiftList</servlet-name>
+  	<servlet-name>DeleteNotificationMessage</servlet-name>
   </filter-mapping>
   
   <!-- session configuration -->
@@ -83,6 +84,11 @@
   <servlet>
   	<servlet-name>ShareGiftList</servlet-name>
   	<servlet-class>be.Jadoulle_Declercq.Servlets.ShareGiftListServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+  	<servlet-name>DeleteNotificationMessage</servlet-name>
+  	<servlet-class>be.Jadoulle_Declercq.Servlets.DeleteNotificationMessageServlet</servlet-class>
   </servlet>
   
   <!-- servlets mapping -->
@@ -154,6 +160,13 @@
   	<url-pattern>/ShareGiftList</url-pattern>
   	<url-pattern>/shareGiftList</url-pattern>
   	<url-pattern>/ShareGiftListServlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>DeleteNotificationMessage</servlet-name>
+  	<url-pattern>/DeleteNotificationMessage</url-pattern>
+  	<url-pattern>/deleteNotificationMessage</url-pattern>
+  	<url-pattern>/DeleteNotificationMessageServlet</url-pattern>
   </servlet-mapping>
   
 </web-app>
